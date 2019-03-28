@@ -1,0 +1,88 @@
+:host {
+    margin-left: 20px;
+    margin-top: 20px;
+    margin-right: 60px;
+    background: white;
+    overflow: hidden;
+    border-radius: 5px;
+}
+
+.header {
+    background: rgb(255, 146, 146);
+    color: white;
+}
+
+.shutdown {
+    position: absolute;
+    right: 10px;
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 5px;
+    opacity: .3;
+}
+
+.shutdown.active {
+    background: white;
+    opacity: 1;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button:disabled {
+    cursor: default;
+    opacity: .3;
+}
+
+.fa-random {
+    opacity: 0.2;
+}
+
+.fa-volume-up,
+.fa-volume-down {
+    font-size: 23px;
+    color: white;
+}
+
+.active {
+    opacity: 1;
+    background: #eee;
+}
+
+.currentSong {
+    font-weight: bold;
+    font-size: 16px;
+    background: rgb(255, 231, 231);
+}
+
+.control-content {
+    width: 50%;
+}
+
+.fa-fast-backward,
+.fa-fast-forward,
+.fa-play,
+.fa-pause {
+    color: rgb(255, 146, 146);
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.fileName {
+    padding: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+}
+
+.fileName:hover {
+    background: rgb(255, 231, 231);
+}

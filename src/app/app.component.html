@@ -1,0 +1,106 @@
+<!-- Wrapp fuer Elemente, waehrend App laueft (Main, Shutdown) -->
+<div *ngIf="!(shutdown$ | async); else shutdownTemp">
+
+    <!-- Button zum Pi herunterfahren -->
+    <button (click)="shutdownPi()"
+            [class.active]="clicks > 0"
+            class="fa fa-power-off text-danger button-clean shutdown">
+    </button>
+
+    <!-- App-Container -->
+    <div class="row no-gutters header py-2 px-3 align-items-center">
+
+        <!-- Ueberschrift -->
+        <div class="col heading">SH Player</div>
+
+        <!-- random und Lautstaerke -->
+        <div class="col row no-gutters justify-content-end">
+
+            <!-- random -->
+            <button class="fa fa-random ripple button-clean mr-4"
+                    [ngClass]='{"active": random}'
+                    (click)="toggleRandom()"></button>
+
+            <!-- leiser -->
+            <button class="fa fa-volume-down ripple"
+                    (click)="changeVolume(false)"
+                    [disabled]="volume === 0"></button>
+
+            <!-- lauter -->
+            <button class="fa fa-volume-up ripple"
+                    [disabled]="volume === 100"
+                    (click)="changeVolume(true)"></button>
+        </div>
+    </div>
+
+    <!-- Aktuell laufender Titel -->
+    <div class="currentSong p-3">{{getCurrentSong() | fileName}}</div>
+
+    <!-- prev, pause, next -->
+    <div class="row no-gutters mt-2 justify-content-center">
+
+        <!-- Wrapper -->
+        <div class="control-content row no-gutters justify-content-between">
+
+            <!-- previous title -->
+            <button class="fa fa-fast-backward ripple"
+                    (click)="changeItem(false)"></button>
+
+            <!-- toggle pause -->
+            <button class="fa ripple"
+                    [ngClass]='{
+    "fa-pause": !paused,
+    "fa-play": paused  }'
+                    (click)="togglePaused()"></button>
+
+            <!-- next title -->
+            <button class="fa fa-fast-forward ripple"
+                    (click)="changeItem(true)"></button>
+        </div>
+    </div>
+
+    <!-- Suchfeld -->
+    <div class="px-3 mb-3">
+
+        <!-- Label besteht auch Icon und Suchfeld -->
+        <label class="search-field form-control d-flex no-gutters align-items-center p-1"
+               for="searchField">
+
+            <!-- Such-Symbol -->
+            <i class="fa fa-search ml-2"></i>
+
+            <!-- Suchefeld -->
+            <input autofocus
+                   autocomplete="off"
+                   id="searchField"
+                   placeholder="Lied suchen"
+                   class="col ml-2"
+                   (keyup)="0"
+                   #search
+                   type="search">
+        </label>
+    </div>
+
+    <!-- Trefferliste -->
+    <div class="mb-3">
+
+        <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
+        <div *ngFor="let file of files | filterList:search.value">
+
+            <!-- Song kann angeklickt und gestartet werden -->
+            <button class="fileName px-3"
+                    (click)="playSong(file.index)">
+
+                <!-- Bei Text wird Suchbegriff fett hinterlegt -->
+                <span [innerHTML]="file.fileName | fileName:search.value"></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<!-- Anzeigen, wenn Pi heruntergefahren wurde -->
+<ng-template #shutdownTemp>
+    <div class="container mr-0 ml-0 no-gutters p-3">
+        Die Anwendung wurde beendet.
+    </div>
+</ng-template>

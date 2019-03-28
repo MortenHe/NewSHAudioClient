@@ -1,4 +1,4 @@
-<!-- Wrapp fuer Elemente, waehrend App laueft (Main, Shutdown) -->
+<!-- Wrap fuer Elemente, waehrend App laueft (Main, Shutdown) -->
 <div *ngIf="!(shutdown$ | async); else shutdownTemp">
 
     <!-- Button zum Pi herunterfahren -->
@@ -11,15 +11,10 @@
     <div class="row no-gutters header py-2 px-3 align-items-center">
 
         <!-- Ueberschrift -->
-        <div class="col heading">SH Player</div>
+        <div class="col heading">SH Player 2019</div>
 
-        <!-- random und Lautstaerke -->
+        <!-- Lautstaerke -->
         <div class="col row no-gutters justify-content-end">
-
-            <!-- random -->
-            <button class="fa fa-random ripple button-clean mr-4"
-                    [ngClass]='{"active": random}'
-                    (click)="toggleRandom()"></button>
 
             <!-- leiser -->
             <button class="fa fa-volume-down ripple"
@@ -34,7 +29,7 @@
     </div>
 
     <!-- Aktuell laufender Titel -->
-    <div class="currentSong p-3">{{getCurrentSong() | fileName}}</div>
+    <div class="currentSong px-3 py-2">{{getCurrentSong() | fileName}}</div>
 
     <!-- prev, pause, next -->
     <div class="row no-gutters mt-2 justify-content-center">
@@ -85,22 +80,37 @@
     <div class="mb-3">
 
         <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
-        <div *ngFor="let file of files | filterList:search.value">
+        <div *ngFor="let file of files | filterList:search.value | orderBy"
+             class="d-flex mx-3 align-items-center mb-2">
 
-            <!-- Song kann angeklickt und gestartet werden -->
-            <button class="fileName px-3"
-                    (click)="playSong(file.index)">
+            <!-- Song einreihen -->
+            <button [disabled]="file.index === position"
+                    class="btn btn-sm btn-outline-success mr-2"
+                    (click)="enqeueSong(file.index)"><i class="fa fa-plus"></i></button>
 
-                <!-- Bei Text wird Suchbegriff fett hinterlegt -->
-                <span [innerHTML]="file.fileName | fileName:search.value"></span>
-            </button>
+            <!-- Bei Text wird Suchbegriff fett hinterlegt, innerHTML, weil <b> Tags fuer fett gesetzt werden, bei Click Song abspielen -->
+            <div [innerHTML]="file.fileName | fileName | highlightSearch:search.value"
+                 class="cursor-pointer"
+                 (click)="playSong(file.index)"></div>
         </div>
     </div>
-</div>
 
-<!-- Anzeigen, wenn Pi heruntergefahren wurde -->
-<ng-template #shutdownTemp>
-    <div class="container mr-0 ml-0 no-gutters p-3">
-        Die Anwendung wurde beendet.
+    <!-- Playlist ausgeben, aktuellen Song fett darstellen -->
+    <div *ngFor="let file of files; index as index, last as last"
+         [class.font-weight-bold]="index === position"
+         [class.mb-2]="last"
+         class="cursor-pointer px-3"
+         (click)="jumpTo(index)">
+        {{file | fileName}}
+
+        <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
+        <i class="fa fa-spinner fa-spin"
+           *ngIf="index === jumpPosition"></i>
     </div>
-</ng-template>
+
+    <!-- Anzeigen, wenn Pi heruntergefahren wurde -->
+    <ng-template #shutdownTemp>
+        <div class="container mr-0 ml-0 no-gutters p-3">
+            Die Anwendung wurde beendet.
+        </div>
+    </ng-template>

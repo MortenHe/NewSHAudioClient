@@ -6,6 +6,7 @@ import { BackendService } from './services/backend.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
+
 export class AppComponent {
 
   //aktuell laufender Song
@@ -17,11 +18,11 @@ export class AppComponent {
   //Position in Playlist
   position = 0;
 
+  //temp. Wert, wohin gerade gesprungen werden soll
+  jumpPosition: number = -1;
+
   //ist gerade pausiert?
   paused = false;
-
-  //ist gerade random?
-  random = false;
 
   //Start-Volume
   volume = 50;
@@ -46,16 +47,16 @@ export class AppComponent {
     //position abbonieren
     this.bs.getPosition().subscribe(position => {
       this.position = position;
+
+      //temp. Sprungwert (fuer optische Darstellung) wieder zuruecksetzen nach kurzer Verzoegerung
+      setTimeout(() => {
+        this.jumpPosition = -1
+      }, 500);
     });
 
     //paused abbonieren
     this.bs.getPaused().subscribe(paused => {
       this.paused = paused;
-    });
-
-    //random abbonieren
-    this.bs.getRandom().subscribe(random => {
-      this.random = random;
     });
 
     //volume abbonieren
@@ -85,6 +86,39 @@ export class AppComponent {
     this.bs.sendMessage({ type: "jump-to", value: index });
   }
 
+  //Song einreihen
+  enqeueSong(index) {
+
+    //Aktuellen Titel kann man nicht einreihen
+    if (index !== this.position) {
+
+      //Playlist und aktuelle Position holen
+      let tempFiles = this.files;
+      let tempPosition = this.position
+
+      //Wenn der Titel der angehaengt werden soll vor dem aktuellen Titel liegt, muss der Titel an anderer Stelle eingereiht werden
+      if (index < this.position) {
+        tempPosition -= 1;
+      }
+
+      //Titel in Playlist verschieben (hinter aktuellen Titel) und Info der neuen Playlist und Position an WSS schicken
+      tempFiles.splice(tempPosition + 1, 0, tempFiles.splice(index, 1)[0]);
+      this.bs.sendMessage({ type: "set-files", value: { files: tempFiles, position: tempPosition } });
+    }
+  }
+
+  //zu gewissem Titel in Playlist springen
+  jumpTo(position: number) {
+
+    //Befehl an WSS schicken
+    this.bs.sendMessage({ type: "jump-to", value: position });
+
+    //Wenn zu einem anderen Titel gesprungen werden soll, bei diesem Eintrag einen Spinner anzeigen, bis der Titel geladen wurde
+    if (this.position !== position) {
+      this.jumpPosition = position;
+    }
+  }
+
   //vor oder zureuck schalten
   changeItem(increase) {
     this.bs.sendMessage({ type: "change-item", value: increase });
@@ -93,11 +127,6 @@ export class AppComponent {
   //paused toggeln
   togglePaused() {
     this.bs.sendMessage({ type: "toggle-paused", value: "" });
-  }
-
-  //random toggeln
-  toggleRandom() {
-    this.bs.sendMessage({ type: "toggle-random", value: "" });
   }
 
   //volume aendern

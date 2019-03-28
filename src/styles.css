@@ -1,6 +1,7 @@
 /* You can add global styles to this file, and also import other style files */
 
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
+
 body {
     background: #eee;
     overflow-y: scroll;
@@ -62,4 +63,8 @@ button:focus {
     transform: scale(0, 0);
     opacity: .2;
     transition: 0s;
+}
+
+.cursor-pointer {
+    cursor: pointer;
 }

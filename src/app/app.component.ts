@@ -19,7 +19,7 @@ export class AppComponent {
   position = 0;
 
   //temp. Wert, wohin gerade gesprungen werden soll
-  jumpPosition: number = -1;
+  jumpPosition = -1;
 
   //ist gerade pausiert?
   paused = false;
@@ -31,7 +31,10 @@ export class AppComponent {
   clicks = 0;
 
   //Ist die App beendet worden?
-  shutdown$;
+  shutdown = false;
+
+  //Zustand ob Verbindung zu WSS existiert
+  connected: boolean;
 
   //Service injecten
   constructor(private bs: BackendService) { }
@@ -65,7 +68,14 @@ export class AppComponent {
     });
 
     //shutdown Zustand abbonieren
-    this.shutdown$ = this.bs.getShutdown();
+    this.bs.getShutdown().subscribe(shutdown => {
+      this.shutdown = shutdown;
+    });
+
+    //Zustand abbonieren, ob Verbindung zu WSS besteht
+    this.bs.getConnected().subscribe(connected => {
+      this.connected = connected
+    });
 
     //Regelmassieg eine Nachricht an WSS schicken, damit ggf. die Verbindung wieder aufgebaut wird
     setInterval(() => {
@@ -132,6 +142,11 @@ export class AppComponent {
   //volume aendern
   changeVolume(increase) {
     this.bs.sendMessage({ type: "change-volume", value: increase });
+  }
+
+  //WSS-Server per PHP Aufruf starten
+  activateApp() {
+    this.bs.activateApp().subscribe();
   }
 
   //Pi per Service herunterfahren

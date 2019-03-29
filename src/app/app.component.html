@@ -1,10 +1,10 @@
 <!-- Wrap fuer Elemente, waehrend App laueft (Main, Shutdown) -->
-<div *ngIf="!(shutdown$ | async); else shutdownTemp">
+<div *ngIf="!shutdown">
 
     <!-- Button zum Pi herunterfahren -->
     <button (click)="shutdownPi()"
             [class.active]="clicks > 0"
-            class="fa fa-power-off text-danger button-clean shutdown">
+            class="fa fa-power-off text-danger button-clean shutdown shadow">
     </button>
 
     <!-- App-Container -->
@@ -109,8 +109,15 @@
     </div>
 
     <!-- Anzeigen, wenn Pi heruntergefahren wurde -->
-    <ng-template #shutdownTemp>
-        <div class="container mr-0 ml-0 no-gutters p-3">
-            Die Anwendung wurde beendet.
-        </div>
-    </ng-template>
+    <div *ngIf="shutdown"
+         class="container mr-0 ml-0 no-gutters p-3">
+        Die Anwendung wurde beendet.
+    </div>
+
+    <!-- Zustand ueber Verbindung zu WSS -->
+    <div class="connection"
+         (click)="activateApp()"><i class="fa fa-wifi"
+           [ngClass]='{
+  "text-danger": !connected,
+  "text-success": connected
+ }'></i></div>

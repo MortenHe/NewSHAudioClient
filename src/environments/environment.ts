@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  wssUrl: 'ws://132.230.25.79:8080',
+  serverUrl: 'http://132.230.25.79',
+  wssUrl: 'ws://132.230.25.79:9090',
 };
 
 /*

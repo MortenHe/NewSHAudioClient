@@ -1,9 +1,13 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { Subject, BehaviorSubject, Observable, Observer } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class BackendService {
+
+  //URL fuer Server (um App per PHP aktivieren zu koennen)
+  serverUrl = environment.serverUrl;
 
   //URL fuer WebSocketServer
   wssUrl = environment.wssUrl;
@@ -32,8 +36,11 @@ export class BackendService {
   //wurde Server heruntergefahren?
   shutdown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
+  //Ist die App gerade mit dem WSS verbunden?
+  connected$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
+
   //Services injekten
-  constructor() {
+  constructor(private _http: HttpClient) {
 
     //WebSocket erstellen
     this.createWebsocket();
@@ -58,6 +65,9 @@ export class BackendService {
         //Wenn Verbindung zu WSS existiert
         if (socket.readyState === WebSocket.OPEN) {
 
+          //App ist mit WSS verbunden
+          this.connected$.next(true);
+
           //Wenn es nicht nur ein Ping Message ist (die ggf. Verbindung wieder herstellt)
           if (data["type"] !== "ping") {
 
@@ -68,7 +78,9 @@ export class BackendService {
 
         //keine Verbindung zu WSS
         else {
-          console.log("ready state ist " + socket.readyState)
+          //App ist nicht mit WSS verbunden
+          this.connected$.next(false);
+          //console.log("ready state ist " + socket.readyState)
 
           //Verbindung zu WSS wieder herstellen                    
           this.createWebsocket();
@@ -149,5 +161,15 @@ export class BackendService {
   //Shutdown Zustand liefern
   getShutdown() {
     return this.shutdown$;
+  }
+
+  //Verbindungszustand mit WSS liefern
+  getConnected() {
+    return this.connected$;
+  }
+
+  //App aktivieren = WSS starten
+  activateApp() {
+    return this._http.get(this.serverUrl + "/php/activateApp.php?mode=sh");
   }
 }

@@ -18,6 +18,9 @@ export class AppComponent {
   //Position in Playlist
   position = 0;
 
+  //Wo soll der naechste Track eingefuegt werden. Wert waechst bis neuer Titel kommt
+  insertOffset = 0;
+
   //temp. Wert, wohin gerade gesprungen werden soll
   jumpPosition = -1;
 
@@ -55,6 +58,11 @@ export class AppComponent {
       setTimeout(() => {
         this.jumpPosition = -1
       }, 500);
+    });
+
+    //insertOffset abbonieren
+    this.bs.getInsertOffeset().subscribe(insertOffset => {
+      this.insertOffset = insertOffset;
     });
 
     //paused abbonieren
@@ -106,14 +114,20 @@ export class AppComponent {
       let tempFiles = this.files;
       let tempPosition = this.position
 
+      //let insertPosition = (tempPosition + this.insertOffset + 1) % this.files.length;
+
       //Wenn der Titel der angehaengt werden soll vor dem aktuellen Titel liegt, muss der Titel an anderer Stelle eingereiht werden
       if (index < this.position) {
         tempPosition -= 1;
       }
 
       //Titel in Playlist verschieben (hinter aktuellen Titel) und Info der neuen Playlist und Position an WSS schicken
-      tempFiles.splice(tempPosition + 1, 0, tempFiles.splice(index, 1)[0]);
+      tempFiles.splice((tempPosition + this.insertOffset + 1) % this.files.length, 0, tempFiles.splice(index, 1)[0]);
       this.bs.sendMessage({ type: "set-files", value: { files: tempFiles, position: tempPosition } });
+
+      //Neue insertOffeset berechnen und an Server schicken
+      let newInsertOffset = (this.insertOffset + 1) % this.files.length;
+      this.bs.sendMessage({ type: "set-insert-offset", value: newInsertOffset });
     }
   }
 

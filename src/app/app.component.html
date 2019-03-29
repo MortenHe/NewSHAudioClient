@@ -96,17 +96,27 @@
     </div>
 
     <!-- Playlist ausgeben, aktuellen Song fett darstellen -->
-    <div *ngFor="let file of files; index as index, last as last"
-         [class.font-weight-bold]="index === position"
-         [class.mb-2]="last"
-         class="cursor-pointer px-3"
-         (click)="jumpTo(index)">
-        {{file | fileName}}
+    <ng-container *ngFor="let file of files; index as index, last as last">
 
-        <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
-        <i class="fa fa-spinner fa-spin"
-           *ngIf="index === jumpPosition"></i>
-    </div>
+        <!-- Hier wird der neue Titel eingefuegt -->
+        <div class="ml-3"
+             *ngIf="index === (position + insertOffset + 1) % files.length">
+            <i class="fa fa-arrow-right"></i>
+        </div>
+
+        <!-- Titelinfo -->
+        <div [class.font-weight-bold]="index === position"
+             [class.mb-2]="last"
+             class="cursor-pointer px-3"
+             (click)="jumpTo(index)">
+
+            {{file | fileName}}
+
+            <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
+            <i class="fa fa-spinner fa-spin"
+               *ngIf="index === jumpPosition"></i>
+        </div>
+    </ng-container>
 
     <!-- Anzeigen, wenn Pi heruntergefahren wurde -->
     <div *ngIf="shutdown"

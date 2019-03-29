@@ -27,6 +27,9 @@ export class BackendService {
   //Position der Datei, die gerade gespielt wird
   position$: Subject<number> = new Subject<number>();
 
+  //Offset wo Datei eingereiht wird
+  insertOffset$: Subject<number> = new Subject<number>();
+
   //aktueller Pause-Zustand
   paused$: Subject<boolean> = new Subject<boolean>();
 
@@ -112,6 +115,10 @@ export class BackendService {
           this.position$.next(value);
           break;
 
+        case "set-insert-offset":
+          this.insertOffset$.next(value);
+          break;
+
         case "toggle-paused":
           this.paused$.next(value);
           break;
@@ -146,6 +153,11 @@ export class BackendService {
   //Position liefern
   getPosition() {
     return this.position$;
+  }
+
+  //Position liefern
+  getInsertOffeset() {
+    return this.insertOffset$;
   }
 
   //Pause liefern

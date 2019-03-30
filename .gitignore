@@ -39,3 +39,5 @@ testem.log
 Thumbs.db
 /myDist.zip
 /src/tools/connection.js
+src/environments/connection.js
+package-lock.json

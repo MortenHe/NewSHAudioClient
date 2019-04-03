@@ -121,13 +121,19 @@ export class AppComponent {
         tempPosition -= 1;
       }
 
-      //Titel in Playlist verschieben (hinter aktuellen Titel) und Info der neuen Playlist und Position an WSS schicken
-      tempFiles.splice((tempPosition + this.insertOffset + 1) % this.files.length, 0, tempFiles.splice(index, 1)[0]);
-      this.bs.sendMessage({ type: "set-files", value: { files: tempFiles, position: tempPosition } });
-
-      //Neue insertOffeset berechnen und an Server schicken
+      //Neue insertOffeset berechnen
       let newInsertOffset = (this.insertOffset + 1) % this.files.length;
-      this.bs.sendMessage({ type: "set-insert-offset", value: newInsertOffset });
+
+      //Titel in Playlist verschieben (hinter aktuellen Titel) und Info der neuen Playlist, Position und InsertOffset an WSS schicken
+      tempFiles.splice((tempPosition + this.insertOffset + 1) % this.files.length, 0, tempFiles.splice(index, 1)[0]);
+      this.bs.sendMessage({
+        type: "set-files-position-offset",
+        value: {
+          files: tempFiles,
+          position: tempPosition,
+          insertOffset: newInsertOffset
+        }
+      });
     }
   }
 

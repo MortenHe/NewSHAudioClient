@@ -7,10 +7,30 @@ body {
     overflow-y: scroll;
 }
 
-.app-wrapper {
+.app-width {
     min-width: 400px;
     max-width: 600px;
     position: relative;
+}
+
+.app-container {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.app-content {
+    margin-right: 60px;
+    margin-left: 10px;
+}
+
+.header {
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+}
+
+.border-radius-bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
 }
 
 /* Ripple Button Effect fuer Touch */

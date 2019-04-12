@@ -1,20 +1,15 @@
-:host {
-    margin-left: 20px;
-    margin-top: 20px;
-    margin-right: 60px;
-    background: white;
-    overflow: hidden;
-    border-radius: 5px;
-}
-
 .header {
     background: rgb(255, 146, 146);
     color: white;
 }
 
-.shutdown {
+.shutdown-wrapper {
     position: absolute;
     right: 10px;
+    overflow: hidden;
+}
+
+.shutdown {
     width: 40px;
     height: 40px;
     background: white;
@@ -85,4 +80,8 @@ input {
 
 .fileName:hover {
     background: rgb(255, 231, 231);
+}
+
+.alreday-played {
+    opacity: .6;
 }

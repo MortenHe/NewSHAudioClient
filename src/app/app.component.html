@@ -20,7 +20,7 @@
 
     <!-- App-Container -->
     <div class="app-content flex-grow-1 shadow">
-        <div class="row no-gutters header py-2 px-3 align-items-center">
+        <div class="row no-gutters header py-1 px-3 align-items-center">
 
             <!-- Ueberschrift -->
             <div class="col heading">SH Player 2019</div>
@@ -41,10 +41,10 @@
         </div>
 
         <!-- Aktuell laufender Titel -->
-        <div class="currentSong px-3 py-2">{{getCurrentSong() | fileName}}</div>
+        <!-- <div class="currentSong px-3 py-2">{{getCurrentSong() | fileName}}</div> -->
 
         <!-- prev, pause, next -->
-        <div class="row no-gutters pt-2 justify-content-center bg-white">
+        <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose">
 
             <!-- Wrapper -->
             <div class="control-content row no-gutters justify-content-between">
@@ -67,7 +67,7 @@
         </div>
 
         <!-- Suchfeld -->
-        <div class="px-3 pb-3 bg-white">
+        <div class="pt-2 px-3 pb-2 bg-white">
 
             <!-- Label besteht auch Icon und Suchfeld -->
             <label class="search-field form-control d-flex no-gutters align-items-center p-1 m-0"
@@ -80,7 +80,7 @@
                 <input autofocus
                        autocomplete="off"
                        id="searchField"
-                       placeholder="Lied suchen"
+                       placeholder="Lied suchen (mind. 3 Buchstaben)"
                        class="col ml-2"
                        (keyup)="0"
                        #search
@@ -88,49 +88,50 @@
             </label>
         </div>
 
-        <!-- Trefferliste -->
-        <div *ngIf="files | filterList:search.value"
-             class="bg-white pb-1">
+        <!-- Trefferliste, wenn mind. 3 Buchstaben eingegeben wurden -->
+        <div *ngIf="(files | filterList:search.value) && search.value.length > 2"
+             class="bg-white">
 
             <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
-            <div *ngFor="let file of files | filterList:search.value | orderBy"
-                 class="d-flex mx-3 align-items-center pb-2 bg-white">
+            <ng-container *ngFor="let file of files | filterList:search.value | orderBy">
 
-                <!-- Song einreihen -->
-                <button [disabled]="file.index === position"
-                        class="btn btn-sm btn-outline-success mr-2"
-                        (click)="enqeueSong(file.index)"><i class="fa fa-plus"></i></button>
+                <!-- nicht aktuellen Song anbieten -->
+                <div *ngIf="file.index !== position"
+                     class="d-flex mx-3 pb-2 align-items-baseline bg-white">
 
-                <!-- Bei Text wird Suchbegriff fett hinterlegt, innerHTML, weil <b> Tags fuer fett gesetzt werden, bei Click Song abspielen -->
-                <div [innerHTML]="file.fileName | fileName | highlightSearch:search.value"
-                     class="cursor-pointer"
-                     (click)="playSong(file.index)"></div>
-            </div>
+                    <!-- Song einreihen -->
+                    <button class="btn btn-sm btn-outline-dark mr-2"
+                            (click)="enqeueSong(file.index)"><i class="fa fa-plus"></i></button>
+
+                    <!-- Bei Text wird Suchbegriff fett hinterlegt, innerHTML, weil <b> Tags fuer fett gesetzt werden, bei Click Song abspielen -->
+                    <div [innerHTML]="file.fileName | fileName | highlightSearch:search.value"
+                         class="cursor-pointer"
+                         (click)="playSong(file.index)"></div>
+                </div>
+            </ng-container>
         </div>
 
-        <!-- Playlisttitel und Einfuegemarke ausgeben -->
-        <div *ngFor="let file of files; index as index, last as last"
+        <!-- Playlisttitel und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
+        <div *ngFor="let file of files | arrayShift:position; index as index, last as last"
              class="bg-white"
              [ngClass]="{
                  'pb-2 border-radius-bottom': last
                 }">
 
-            <!-- Titelinfo, , aktuellen Song fett darstellen -->
-            <div [ngClass]="{
-                'font-weight-bold': index === position,
-                'alreday-played': index < position}"
+            <!-- Titelinfo, aktuellen Song fett darstellen -->
+            <div [ngClass]="{'font-weight-bold': index === 0}"
                  class="cursor-pointer px-3"
-                 (click)="jumpTo(index)">
+                 (click)="jumpTo(index + position)">
                 {{file | fileName}}
 
                 <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
                 <i class="fa fa-spinner fa-spin"
-                   *ngIf="index === jumpPosition"></i>
+                   *ngIf="index === jumpPosition - position"></i>
             </div>
 
             <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
             <div class="ml-3"
-                 *ngIf="index === (position + insertOffset) % files.length">
+                 *ngIf="index === (insertOffset) % files.length">
                 <i class="fa fa-arrow-right"></i>
             </div>
         </div>

@@ -49,8 +49,8 @@ button:focus {
     position: relative;
     overflow: hidden;
     transform: translate3d(0, 0, 0);
-    height: 40px;
-    width: 40px;
+    height: 35px;
+    width: 35px;
     border-radius: 100%;
     padding: 0;
     display: inline-flex;

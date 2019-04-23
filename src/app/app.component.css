@@ -53,6 +53,10 @@ button:disabled {
     background: rgb(255, 231, 231);
 }
 
+.bg-rose {
+    background: rgb(255, 231, 231);
+}
+
 .control-content {
     width: 50%;
 }

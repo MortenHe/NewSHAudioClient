@@ -8,6 +8,7 @@ import { BackendService } from './services/backend.service';
 import { FileNamePipe } from './pipes/file-name.pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
+import { ArrayShiftPipe } from './pipes/array-shift.pipe';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { OrderByPipe } from './pipes/order-by.pipe';
     FilterListPipe,
     FileNamePipe,
     HighlightSearchPipe,
-    OrderByPipe
+    OrderByPipe,
+    ArrayShiftPipe
   ],
   imports: [
     BrowserModule,

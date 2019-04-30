@@ -15,26 +15,17 @@ export class BackendService {
   //WebSocket
   socket: Subject<any>;
 
-  //produktiv-System?
-  production = environment.production;
-
   //Liste der Dateien
   files$: Subject<any[]> = new Subject<any[]>();
 
   //Lautstaerke
   volume$: Subject<number> = new Subject<number>();
 
-  //Position der Datei, die gerade gespielt wird
-  position$: Subject<number> = new Subject<number>();
-
-  //Offset wo Datei eingereiht wird
-  insertOffset$: Subject<number> = new Subject<number>();
+  //Index wo Datei eingereiht wird
+  insertIndex$: Subject<number> = new Subject<number>();
 
   //aktueller Pause-Zustand
   paused$: Subject<boolean> = new Subject<boolean>();
-
-  //aktueller Random-Zustand
-  random$: Subject<boolean> = new Subject<boolean>();
 
   //wurde Server heruntergefahren?
   shutdown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
@@ -103,28 +94,20 @@ export class BackendService {
 
       //Switch anhand Message-Types
       switch (obj.type) {
-        case "set-files":
+        case "files":
           this.files$.next(value);
           break;
 
-        case "change-volume":
+        case "volume":
           this.volume$.next(value);
           break;
 
-        case "set-position":
-          this.position$.next(value);
+        case "insertIndex":
+          this.insertIndex$.next(value);
           break;
 
-        case "set-insert-offset":
-          this.insertOffset$.next(value);
-          break;
-
-        case "toggle-paused":
+        case "paused":
           this.paused$.next(value);
-          break;
-
-        case "toggle-random":
-          this.random$.next(value);
           break;
 
         case "shutdown":
@@ -140,34 +123,20 @@ export class BackendService {
     this.socket.next(messageObj);
   }
 
-  //files liefern
   getFiles() {
     return this.files$;
   }
 
-  //Volume liefern
   getVolume() {
     return this.volume$;
   }
 
-  //Position liefern
-  getPosition() {
-    return this.position$;
+  getInsertIndex() {
+    return this.insertIndex$;
   }
 
-  //Position liefern
-  getInsertOffeset() {
-    return this.insertOffset$;
-  }
-
-  //Pause liefern
   getPaused() {
     return this.paused$;
-  }
-
-  //Random liefern
-  getRandom() {
-    return this.random$;
   }
 
   //Shutdown Zustand liefern

@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { BackendService } from './services/backend.service';
+import { FormControl } from '@angular/forms';
+import { FilterListPipe } from './pipes/filter-list.pipe';
+import { FileNamePipe } from './pipes/file-name.pipe';
+import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +13,14 @@ import { BackendService } from './services/backend.service';
 
 export class AppComponent {
 
-  //aktuell laufender Song
-  currentSong = "";
-
   //Liste aller files
   files = [];
 
-  //Position in Playlist
-  position = 0;
+  //Liste der files gefiltert nach Suchanfrage
+  filteredFiles = [];
 
   //Wo soll der naechste Track eingefuegt werden. Wert waechst bis neuer Titel kommt
-  insertOffset = 0;
+  insertIndex = 1;
 
   //temp. Wert, wohin gerade gesprungen werden soll
   jumpPosition = -1;
@@ -39,6 +40,17 @@ export class AppComponent {
   //Zustand ob Verbindung zu WSS existiert
   connected: boolean;
 
+  //Suchfeld fuer Titelliste
+  titleSearch: FormControl = new FormControl("");
+
+  //Suchterm
+  term: string = "";
+
+  //Pipes in Comp. aufrufen
+  filterListPipe = new FilterListPipe();
+  fileNamePipe = new FileNamePipe();
+  highlightSearchPipe = new HighlightSearchPipe();
+
   //Service injecten
   constructor(private bs: BackendService) { }
 
@@ -48,21 +60,16 @@ export class AppComponent {
     //files abonnieren
     this.bs.getFiles().subscribe(files => {
       this.files = files;
-    })
 
-    //position abbonieren
-    this.bs.getPosition().subscribe(position => {
-      this.position = position;
+      this.filterFiles();
 
-      //temp. Sprungwert (fuer optische Darstellung) wieder zuruecksetzen nach kurzer Verzoegerung
-      setTimeout(() => {
-        this.jumpPosition = -1
-      }, 500);
+      //Jump Position zuruecksetzen, wenn neue Titelliste vorliegt
+      this.jumpPosition = -1
     });
 
-    //insertOffset abbonieren
-    this.bs.getInsertOffeset().subscribe(insertOffset => {
-      this.insertOffset = insertOffset;
+    //insertIndex abbonieren
+    this.bs.getInsertIndex().subscribe(insertIndex => {
+      this.insertIndex = insertIndex;
     });
 
     //paused abbonieren
@@ -85,6 +92,16 @@ export class AppComponent {
       this.connected = connected
     });
 
+    //Wenn im Suchfeld gesucht wird
+    this.titleSearch.valueChanges.subscribe(val => {
+
+      //Suchanfrage trimmen und merken
+      this.term = val.trim();
+
+      //Dateiliste filtern anhand des Suchterms
+      this.filterFiles();
+    });
+
     //Regelmassieg eine Nachricht an WSS schicken, damit ggf. die Verbindung wieder aufgebaut wird
     setInterval(() => {
       this.bs.sendMessage({
@@ -94,64 +111,31 @@ export class AppComponent {
     }, 1500);
   }
 
-  //aktuellen Song ermitteln
-  getCurrentSong() {
-    return this.files[this.position];
-  }
-
-  //gewissen Song abspielen
-  playSong(index) {
-    this.bs.sendMessage({ type: "jump-to", value: index });
-  }
-
   //Song einreihen
   enqeueSong(index) {
 
-    //Aktuellen Titel kann man nicht einreihen
-    if (index !== this.position) {
-
-      //Playlist und aktuelle Position holen
-      let tempFiles = this.files;
-      let tempPosition = this.position
-
-      //let insertPosition = (tempPosition + this.insertOffset + 1) % this.files.length;
-
-      //Wenn der Titel der angehaengt werden soll vor dem aktuellen Titel liegt, muss der Titel an anderer Stelle eingereiht werden
-      if (index < this.position) {
-        tempPosition -= 1;
-      }
-
-      //Neue insertOffeset berechnen
-      let newInsertOffset = (this.insertOffset + 1) % this.files.length;
-
-      //Titel in Playlist verschieben (hinter aktuellen Titel) und Info der neuen Playlist, Position und InsertOffset an WSS schicken
-      tempFiles.splice((tempPosition + this.insertOffset + 1) % this.files.length, 0, tempFiles.splice(index, 1)[0]);
+    //Titel an passender Stelle einreihen, aber aktuellen Titel kann man nicht einreihen
+    if (index !== 0) {
       this.bs.sendMessage({
-        type: "set-files-position-offset",
-        value: {
-          files: tempFiles,
-          position: tempPosition,
-          insertOffset: newInsertOffset
-        }
+        type: "enque-title",
+        value: index
       });
     }
   }
 
   //zu gewissem Titel in Playlist springen
   jumpTo(position: number) {
-
-    //Befehl an WSS schicken
     this.bs.sendMessage({ type: "jump-to", value: position });
 
-    //Wenn zu einem anderen Titel gesprungen werden soll, bei diesem Eintrag einen Spinner anzeigen, bis der Titel geladen wurde
-    if (this.position !== position) {
+    //Wenn zu einem anderen Titel als dem aktuellen gesprungen werden soll, bei diesem Eintrag einen Spinner anzeigen, bis der Titel geladen wurde
+    if (position !== 0) {
       this.jumpPosition = position;
     }
   }
 
   //vor oder zureuck schalten
-  changeItem(increase) {
-    this.bs.sendMessage({ type: "change-item", value: increase });
+  changeItem(step) {
+    this.bs.sendMessage({ type: "change-item", value: step });
   }
 
   //paused toggeln
@@ -169,16 +153,44 @@ export class AppComponent {
     this.bs.activateApp().subscribe();
   }
 
+  //Titelliste filtern anhand des Suchterms
+  filterFiles() {
+
+    //gefilterte Titelliste zuruecksetzen
+    this.filteredFiles = [];
+
+    //Wenn mind. 3 Buchstaben eingegeben wurden
+    if (this.term.length >= 3) {
+
+      //Titelliste anhand des Terms filtern
+      let tempFilteredFiles = this.filterListPipe.transform(this.files, this.term);
+
+      //Ueber gefiltertete Titelliste gehen
+      for (let file of tempFilteredFiles) {
+
+        //Namensform anpassen (Pfad und Dateiendung weg)
+        let tempFileName = this.fileNamePipe.transform(file.fileName);
+
+        //Titel per HTML highlighten (<b> Tags)
+        let tempHighlightedFileName = this.highlightSearchPipe.transform(tempFileName, this.term);
+
+        //Titel (ausser dem aktuell laufemden) in Liste der gefilterteten Titel einfuegen
+        if (file.index !== 0) {
+          this.filteredFiles.push({
+            fileName: tempHighlightedFileName,
+            index: file.index
+          });
+        }
+      }
+    }
+  }
+
   //Pi per Service herunterfahren
   shutdownPi() {
 
-    //Clicks erhoehen
+    //Clicks erhoehen. Wenn der Nutzer innerhalb einer gewissen Zeit 2 mal geklickt hat, Pi herunterfahren
     this.clicks++;
-
-    //Wenn der Nutzer innerhalb einer gewissen Zeit 2 mal geklickt hat
     if (this.clicks === 2) {
-
-      //Pi herunterfahren
       this.bs.sendMessage({ type: "shutdown", value: "" });
     }
 

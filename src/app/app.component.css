@@ -86,6 +86,10 @@ input {
     background: rgb(255, 231, 231);
 }
 
-.alreday-played {
-    opacity: .6;
+.align-items-baseline {
+    align-items: baseline;
+}
+
+hr {
+    border-top: 1px solid grey;
 }

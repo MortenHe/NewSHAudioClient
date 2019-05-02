@@ -1,22 +1,6 @@
 <!-- Wrap fuer Elemente, waehrend App laueft (Main, Shutdown) -->
 <div *ngIf="!shutdown"
-     class="col no-gutters p-0 d-flex app-container">
-
-    <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->
-    <div class="d-flex shutdown-wrapper shadow">
-        <button (click)="shutdownPi()"
-                [class.active]="clicks > 0"
-                class="fa fa-power-off text-danger button-clean shutdown">
-        </button>
-    </div>
-
-    <!-- Zustand ueber Verbindung zu WSS -->
-    <div class="connection"
-         (click)="activateApp()"><i class="fa fa-wifi"
-           [ngClass]='{
-"text-danger": !connected,
-"text-success": connected
-}'></i></div>
+     class="col no-gutters py-0 d-flex app-container">
 
     <!-- App-Container -->
     <div class="app-content flex-grow-1 shadow">
@@ -76,7 +60,7 @@
                 <!-- Suchefeld -->
                 <input autofocus
                        id="searchField"
-                       placeholder="Lied suchen (mind. 3 Buchstaben)"
+                       placeholder="Lied suchen (mind. 2 Buchstaben)"
                        [formControl]="titleSearch"
                        class="col ml-2"
                        type="search">
@@ -95,13 +79,15 @@
                      [class.pb-3]="last">
 
                     <!-- Song einreihen -->
-                    <button class="btn btn-sm btn-outline-dark mr-2"
-                            (click)="enqeueSong(file.index)"><i class="fa fa-plus"></i></button>
+                    <button class="btn btn-sm mr-2"
+                            (mouseenter)="setHoverTitle(file.index)"
+                            (mouseleave)="resetHoverTitle()"
+                            (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
 
                     <!-- Bei Text wird Suchbegriff fett hinterlegt, innerHTML, weil <b> Tags fuer fett gesetzt werden, bei Click Song abspielen -->
                     <div [innerHTML]="file.fileName"
                          class="cursor-pointer"
-                         (click)="jumpTo(file.index)"></div>
+                         (click)="jumpToFromSearch(file.index)"></div>
                 </div>
 
                 <!-- Trennlinie nach letztem Eintrag -->
@@ -123,10 +109,16 @@
             <!-- Einreihe-Symbol und Songtitel -->
             <div class="ml-3 mr-3 d-flex align-items-baseline">
 
+                <!-- Play-Symbol bei 1. Titel -->
+                <i *ngIf="index === 0"
+                   class="pl-2 mr-3 fa fa-play text-success"></i>
+
                 <!-- Song einreihen, aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm btn-outline-dark mr-2"
-                        (click)="enqeueSong(index)"><i class="fa fa-plus"></i></button>
+                        class="btn btn-sm mr-2"
+                        (mouseenter)="setHoverTitle(index)"
+                        (mouseleave)="resetHoverTitle()"
+                        (click)="enqueueSong(index)"><i class="fa fa-plus"></i></button>
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->
                 <div [ngClass]="{'font-weight-bold': index === 0}"
@@ -141,11 +133,34 @@
             </div>
 
             <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
-            <div class="ml-3 pt-2 pl-2"
+            <div class="ml-3 pt-2 pl-2 d-flex insertIndex align-items-center"
                  *ngIf="(index + 1) === insertIndex">
-                <i class="fa fa-arrow-right"></i>
+                <i class="fa fa-arrow-right text-warning"></i>
+
+                <!-- Info welcher Titel hier eingefuegt wird -->
+                <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
             </div>
         </div>
+    </div>
+
+    <!-- Rechte Seite mit Shutdown und Connection-Indicator -->
+    <div class="m_l_10">
+
+        <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->
+        <div class="d-flex shutdown-wrapper shadow">
+            <button (click)="shutdownPi()"
+                    [class.active]="clicks > 0"
+                    class="fa fa-power-off text-danger button-clean shutdown">
+            </button>
+        </div>
+
+        <!-- Zustand ueber Verbindung zu WSS -->
+        <div class="connection"
+             (click)="activateApp()"><i class="fa fa-wifi"
+               [ngClass]='{
+                        "text-danger": !connected,
+                        "text-success": connected
+            }'></i></div>
     </div>
 </div>
 

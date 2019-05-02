@@ -51,6 +51,9 @@ export class AppComponent {
   fileNamePipe = new FileNamePipe();
   highlightSearchPipe = new HighlightSearchPipe();
 
+  //Titel, der gearde gehovert wird
+  hoverTitle = "";
+
   //Service injecten
   constructor(private bs: BackendService) { }
 
@@ -111,16 +114,31 @@ export class AppComponent {
     }, 1500);
   }
 
+  //Aus Trefferliste der Suche einen Titel einreihen und Suchfeld danach leeren
+  enqueueSongFromSearch(index) {
+    this.enqueueSong(index);
+    this.titleSearch.setValue("");
+  }
+
   //Song einreihen
-  enqeueSong(index) {
+  enqueueSong(index) {
 
     //Titel an passender Stelle einreihen, aber aktuellen Titel kann man nicht einreihen
     if (index !== 0) {
       this.bs.sendMessage({
-        type: "enque-title",
+        type: "enqueue-title",
         value: index
       });
     }
+
+    //Hover Titel wieder zuruecksetzen
+    this.resetHoverTitle();
+  }
+
+  //Aus Trefferliste der Suche zu einem Titel springen und Suchfeld danach leeren
+  jumpToFromSearch(position: number) {
+    this.jumpTo(position);
+    this.titleSearch.setValue("");
   }
 
   //zu gewissem Titel in Playlist springen
@@ -159,8 +177,8 @@ export class AppComponent {
     //gefilterte Titelliste zuruecksetzen
     this.filteredFiles = [];
 
-    //Wenn mind. 3 Buchstaben eingegeben wurden
-    if (this.term.length >= 3) {
+    //Wenn mind. 2 Buchstaben eingegeben wurden
+    if (this.term.length >= 2) {
 
       //Titelliste anhand des Terms filtern
       let tempFilteredFiles = this.filterListPipe.transform(this.files, this.term);
@@ -183,6 +201,16 @@ export class AppComponent {
         }
       }
     }
+  }
+
+  //HoverTitle setzen fuer Oberflaeche (welcher Song wird eingefuegt)
+  setHoverTitle(index) {
+    this.hoverTitle = this.files[index];
+  }
+
+  //HoverTitle zuruecksetzen
+  resetHoverTitle() {
+    this.hoverTitle = "";
   }
 
   //Pi per Service herunterfahren

@@ -3,12 +3,6 @@
     color: white;
 }
 
-.shutdown-wrapper {
-    position: absolute;
-    right: 10px;
-    overflow: hidden;
-}
-
 .shutdown {
     width: 40px;
     height: 40px;
@@ -92,4 +86,16 @@ input {
 
 hr {
     border-top: 1px solid grey;
+}
+
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.insertIndex {
+    height: 32px;
+}
+
+.hoverTitle {
+    opacity: .6;
 }

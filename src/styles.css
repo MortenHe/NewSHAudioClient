@@ -16,11 +16,8 @@ body {
 .app-container {
     margin-top: 20px;
     margin-bottom: 20px;
-}
-
-.app-content {
-    margin-right: 60px;
-    margin-left: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
 }
 
 .header {
@@ -89,10 +86,12 @@ button:focus {
     cursor: pointer;
 }
 
+.m_l_10 {
+    margin-left: 10px;
+}
+
 .connection {
-    position: absolute;
-    right: 10px;
-    top: 55px;
+    margin-top: 15px;
     width: 40px;
     font-size: 25px;
     text-align: center;

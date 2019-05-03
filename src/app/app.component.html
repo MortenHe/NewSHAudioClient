@@ -84,10 +84,9 @@
                             (mouseleave)="resetHoverTitle()"
                             (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
 
-                    <!-- Bei Text wird Suchbegriff fett hinterlegt, innerHTML, weil <b> Tags fuer fett gesetzt werden, bei Click Song abspielen -->
-                    <div [innerHTML]="file.fileName"
-                         class="cursor-pointer"
-                         (click)="jumpToFromSearch(file.index)"></div>
+                    <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
+                    <div class="title-to-highlight cursor-pointer flex-grow-1"
+                         (click)="jumpToFromSearch(file.index)">{{file.fileName}}</div>
                 </div>
 
                 <!-- Trennlinie nach letztem Eintrag -->

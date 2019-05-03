@@ -23,7 +23,7 @@ import { ArrayShiftPipe } from './pipes/array-shift.pipe';
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule,
+    ReactiveFormsModule
   ],
   providers: [BackendService],
   bootstrap: [AppComponent]

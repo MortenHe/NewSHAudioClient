@@ -97,3 +97,7 @@ button:focus {
     text-align: center;
     cursor: pointer;
 }
+
+mark {
+    padding: 0;
+}

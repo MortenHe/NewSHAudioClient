@@ -5,6 +5,9 @@ import { FilterListPipe } from './pipes/filter-list.pipe';
 import { FileNamePipe } from './pipes/file-name.pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
 
+//Mark.js importieren
+import * as Mark from 'mark.js';
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -189,17 +192,27 @@ export class AppComponent {
         //Namensform anpassen (Pfad und Dateiendung weg)
         let tempFileName = this.fileNamePipe.transform(file.fileName);
 
-        //Titel per HTML highlighten (<b> Tags)
-        let tempHighlightedFileName = this.highlightSearchPipe.transform(tempFileName, this.term);
-
         //Titel (ausser dem aktuell laufemden) in Liste der gefilterteten Titel einfuegen
         if (file.index !== 0) {
           this.filteredFiles.push({
-            fileName: tempHighlightedFileName,
+            fileName: tempFileName,
             index: file.index
           });
         }
       }
+
+      //Nach kuerzer Verzoegerung, Titel highlighten
+      setTimeout(() => {
+
+        //Ueber Liste der Titel in Trefferliste gehen
+        let testCollection = document.getElementsByClassName('title-to-highlight');
+        for (let i = 0; i < testCollection.length; i++) {
+
+          //Titel mit Suchbegriff highlighten
+          var instance = new Mark(<HTMLElement>document.getElementsByClassName('title-to-highlight')[i]);
+          instance.mark(this.titleSearch.value);
+        }
+      }, 50);
     }
   }
 

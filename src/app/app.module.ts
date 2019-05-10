@@ -7,9 +7,7 @@ import { AppComponent } from './app.component';
 import { FilterListPipe } from './pipes/filter-list.pipe';
 import { BackendService } from './services/backend.service';
 import { FileNamePipe } from './pipes/file-name.pipe';
-import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
-import { ArrayShiftPipe } from './pipes/array-shift.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
@@ -17,9 +15,7 @@ import { HighlightDirective } from './directives/highlight.directive';
     AppComponent,
     FilterListPipe,
     FileNamePipe,
-    HighlightSearchPipe,
     OrderByPipe,
-    ArrayShiftPipe,
     HighlightDirective
   ],
   imports: [

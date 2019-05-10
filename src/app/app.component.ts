@@ -3,10 +3,6 @@ import { BackendService } from './services/backend.service';
 import { FormControl } from '@angular/forms';
 import { FilterListPipe } from './pipes/filter-list.pipe';
 import { FileNamePipe } from './pipes/file-name.pipe';
-import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
-
-//Mark.js importieren
-import * as Mark from 'mark.js';
 
 @Component({
   selector: 'app-root',
@@ -52,7 +48,6 @@ export class AppComponent {
   //Pipes in Comp. aufrufen
   filterListPipe = new FilterListPipe();
   fileNamePipe = new FileNamePipe();
-  highlightSearchPipe = new HighlightSearchPipe();
 
   //Titel, der gearde gehovert wird
   hoverTitle = "";

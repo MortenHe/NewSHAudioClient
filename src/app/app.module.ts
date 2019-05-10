@@ -10,6 +10,7 @@ import { FileNamePipe } from './pipes/file-name.pipe';
 import { HighlightSearchPipe } from './pipes/highlight-search.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { ArrayShiftPipe } from './pipes/array-shift.pipe';
+import { HighlightDirective } from './directives/highlight.directive';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { ArrayShiftPipe } from './pipes/array-shift.pipe';
     FileNamePipe,
     HighlightSearchPipe,
     OrderByPipe,
-    ArrayShiftPipe
+    ArrayShiftPipe,
+    HighlightDirective
   ],
   imports: [
     BrowserModule,

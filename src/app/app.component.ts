@@ -200,19 +200,6 @@ export class AppComponent {
           });
         }
       }
-
-      //Nach kuerzer Verzoegerung, Titel highlighten
-      setTimeout(() => {
-
-        //Ueber Liste der Titel in Trefferliste gehen
-        let testCollection = document.getElementsByClassName('title-to-highlight');
-        for (let i = 0; i < testCollection.length; i++) {
-
-          //Titel mit Suchbegriff highlighten
-          var instance = new Mark(<HTMLElement>document.getElementsByClassName('title-to-highlight')[i]);
-          instance.mark(this.titleSearch.value);
-        }
-      }, 50);
     }
   }
 

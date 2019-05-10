@@ -86,7 +86,8 @@
 
                     <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
                     <div class="title-to-highlight cursor-pointer flex-grow-1"
-                         (click)="jumpToFromSearch(file.index)">{{file.fileName}}</div>
+                         (click)="jumpToFromSearch(file.index)"
+                         [highlight]="titleSearch.value">{{file.fileName}}</div>
                 </div>
 
                 <!-- Trennlinie nach letztem Eintrag -->

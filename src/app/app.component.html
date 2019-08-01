@@ -130,6 +130,11 @@
                     <i class="fa fa-spinner fa-spin"
                        *ngIf="index === jumpPosition"></i>
                 </div>
+
+                <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
+                <button *ngIf="index !== 0"
+                        class="btn btn-sm ml-auto"
+                        (click)="moveTitleToEnd(index)"><i class="text-danger fa fa-minus"></i></button>
             </div>
 
             <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->

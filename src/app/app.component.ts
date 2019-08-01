@@ -118,7 +118,7 @@ export class AppComponent {
     this.titleSearch.setValue("");
   }
 
-  //Song einreihen
+  //Titel einreihen
   enqueueSong(index) {
 
     //Titel an passender Stelle einreihen, aber aktuellen Titel kann man nicht einreihen
@@ -131,6 +131,16 @@ export class AppComponent {
 
     //Hover Titel wieder zuruecksetzen
     this.resetHoverTitle();
+  }
+
+  //Titel ans Ende der Playlist verschieben (nicht bei aktuellem Titel moeglich)
+  moveTitleToEnd(index) {
+    if (index !== 0) {
+      this.bs.sendMessage({
+        type: "move-title-to-end",
+        value: index
+      });
+    }
   }
 
   //Aus Trefferliste der Suche zu einem Titel springen und Suchfeld danach leeren

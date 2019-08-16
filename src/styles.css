@@ -90,10 +90,18 @@ button:focus {
 }
 
 .connection {
+    color: #555;
     width: 40px;
-    font-size: 25px;
+    height: 40px;
+    font-size: 23px;
     text-align: center;
     cursor: pointer;
+}
+
+.shutdown {
+    width: 40px;
+    height: 40px;
+    border-radius: 40px;
 }
 
 mark {
@@ -103,5 +111,5 @@ mark {
 
 .active-audio-mode span {
     font-weight: bold;
-    border-bottom: 2px solid black;
+    border-bottom: 2px solid #555;
 }

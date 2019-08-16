@@ -21,7 +21,7 @@
 
             <!-- Zustand ueber Verbindung zu WSS -->
             <button class="btn connection ripple"
-                    [disabled]="!connected"
+                    [class.unconnected]="!connected"
                     (click)="activateApp()"><i class="fa fa-wifi"></i></button>
 
             <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->

@@ -12,6 +12,9 @@ import { FileNamePipe } from './pipes/file-name.pipe';
 
 export class AppComponent {
 
+  //Audiomodus (sh, mh, kids)
+  audioMode = "";
+
   //Liste aller files
   files = [];
 
@@ -57,6 +60,11 @@ export class AppComponent {
 
   //beim Init
   ngOnInit() {
+
+    //audioMode abonnieren
+    this.bs.getAudioMode().subscribe(audioMode => {
+      this.audioMode = audioMode;
+    });
 
     //files abonnieren
     this.bs.getFiles().subscribe(files => {
@@ -110,6 +118,14 @@ export class AppComponent {
         value: ""
       });
     }, 1500);
+  }
+
+  //Audiomodus setzen (sh, mh, kids)
+  setAudioMode(mode) {
+    this.bs.sendMessage({
+      type: "set-audio-mode",
+      value: mode
+    });
   }
 
   //Aus Trefferliste der Suche einen Titel einreihen und Suchfeld danach leeren

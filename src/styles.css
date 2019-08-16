@@ -90,7 +90,6 @@ button:focus {
 }
 
 .connection {
-    margin-top: 15px;
     width: 40px;
     font-size: 25px;
     text-align: center;
@@ -100,4 +99,9 @@ button:focus {
 mark {
     padding: 0;
     background: #ffc107;
+}
+
+.active-audio-mode span {
+    font-weight: bold;
+    border-bottom: 2px solid black;
 }

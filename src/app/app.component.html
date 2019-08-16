@@ -6,29 +6,41 @@
     <div class="app-content flex-grow-1 shadow">
         <div class="row no-gutters header py-1 px-3 align-items-center">
 
-            <!-- Ueberschrift -->
-            <div class="col heading">SH Player 2019</div>
+            <!-- Modusauswahl (sh, mh, kids) -->
+            <div class="col heading">
+                <button class="btn active-audio-mode"
+                        [class.active-audio-mode]="audioMode === 'sh'"
+                        (click)="setAudioMode('sh')"><span>SH</span></button>
+                <button class="btn"
+                        [class.active-audio-mode]="audioMode === 'mh'"
+                        [disabled]="audioMode === 'mh'"><span>MH</span></button>
+                <button class="btn"
+                        [class.active-audio-mode]="audioMode === 'kids'"
+                        (click)="setAudioMode('kids')"><span>Kids</span></button>
+            </div>
 
-            <!-- Lautstaerke -->
-            <div class="col row no-gutters justify-content-end">
+            <!-- Zustand ueber Verbindung zu WSS -->
+            <div class="connection ripple mr-2"
+                 (click)="activateApp()"><i class="fa fa-wifi"
+                   [ngClass]='{
+                         "text-danger": !connected,
+                         "text-success": connected
+             }'></i></div>
 
-                <!-- leiser -->
-                <button class="fa fa-volume-down ripple"
-                        (click)="changeVolume(false)"
-                        [disabled]="volume === 0"></button>
-
-                <!-- lauter -->
-                <button class="fa fa-volume-up ripple"
-                        [disabled]="volume === 100"
-                        (click)="changeVolume(true)"></button>
+            <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->
+            <div class="d-flex shutdown-wrapper shadow">
+                <button (click)="shutdownPi()"
+                        [class.active]="clicks > 0"
+                        class="fa fa-power-off text-danger button-clean shutdown">
+                </button>
             </div>
         </div>
 
         <!-- prev, pause, next -->
-        <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose">
+        <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
 
             <!-- Wrapper -->
-            <div class="control-content row no-gutters justify-content-between">
+            <div class="col-6 control-content row no-gutters justify-content-between">
 
                 <!-- previous title -->
                 <button class="fa fa-fast-backward ripple"
@@ -44,6 +56,20 @@
                 <!-- next title -->
                 <button class="fa fa-fast-forward ripple"
                         (click)="changeItem(1)"></button>
+            </div>
+
+            <!-- Lautstaerke -->
+            <div class="col row no-gutters justify-content-end">
+
+                <!-- leiser -->
+                <button class="fa fa-volume-down ripple"
+                        (click)="changeVolume(false)"
+                        [disabled]="volume === 0"></button>
+
+                <!-- lauter -->
+                <button class="fa fa-volume-up ripple"
+                        [disabled]="volume === 100"
+                        (click)="changeVolume(true)"></button>
             </div>
         </div>
 
@@ -146,26 +172,6 @@
                 <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
             </div>
         </div>
-    </div>
-
-    <!-- Rechte Seite mit Shutdown und Connection-Indicator -->
-    <div class="m_l_10">
-
-        <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->
-        <div class="d-flex shutdown-wrapper shadow">
-            <button (click)="shutdownPi()"
-                    [class.active]="clicks > 0"
-                    class="fa fa-power-off text-danger button-clean shutdown">
-            </button>
-        </div>
-
-        <!-- Zustand ueber Verbindung zu WSS -->
-        <div class="connection ripple"
-             (click)="activateApp()"><i class="fa fa-wifi"
-               [ngClass]='{
-                        "text-danger": !connected,
-                        "text-success": connected
-            }'></i></div>
     </div>
 </div>
 

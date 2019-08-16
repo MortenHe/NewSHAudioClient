@@ -15,6 +15,9 @@ export class BackendService {
   //WebSocket
   socket: Subject<any>;
 
+  //Audiomodus (sh, mh, kids)
+  audioMode$: Subject<string> = new Subject<string>();
+
   //Liste der Dateien
   files$: Subject<any[]> = new Subject<any[]>();
 
@@ -85,7 +88,7 @@ export class BackendService {
     //WebSocket anlegen
     this.socket = Subject.create(observer, observable);
 
-    //auf Nachrichten vom Server reagieren
+    //auf Nachrichten vom SERVER reagieren
     this.socket.subscribe(message => {
 
       //console.log((JSON.parse(message.data.toString())));
@@ -94,6 +97,9 @@ export class BackendService {
 
       //Switch anhand Message-Types
       switch (obj.type) {
+        case "audioMode":
+          this.audioMode$.next(value);
+          break;
         case "files":
           this.files$.next(value);
           break;
@@ -121,6 +127,10 @@ export class BackendService {
   sendMessage(messageObj) {
     //console.lconsole.log(messageObj);
     this.socket.next(messageObj);
+  }
+
+  getAudioMode() {
+    return this.audioMode$;
   }
 
   getFiles() {

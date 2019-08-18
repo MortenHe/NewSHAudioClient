@@ -128,6 +128,16 @@ export class AppComponent {
     });
   }
 
+  //Titel ans Ende der Playlist verschieben (nicht bei aktuellem Titel moeglich)
+  moveTitleToEnd(index) {
+    if (index !== 0) {
+      this.bs.sendMessage({
+        type: "move-title-to-end",
+        value: index
+      });
+    }
+  }
+
   //Aus Trefferliste der Suche einen Titel einreihen und Suchfeld danach leeren
   enqueueSongFromSearch(index) {
     this.enqueueSong(index);
@@ -149,16 +159,6 @@ export class AppComponent {
     this.resetHoverTitle();
   }
 
-  //Titel ans Ende der Playlist verschieben (nicht bei aktuellem Titel moeglich)
-  moveTitleToEnd(index) {
-    if (index !== 0) {
-      this.bs.sendMessage({
-        type: "move-title-to-end",
-        value: index
-      });
-    }
-  }
-
   //Aus Trefferliste der Suche zu einem Titel springen und Suchfeld danach leeren
   jumpToFromSearch(position: number) {
     this.jumpTo(position);
@@ -173,6 +173,9 @@ export class AppComponent {
     if (position !== 0) {
       this.jumpPosition = position;
     }
+
+    //nach oben scrollen
+    window.scroll(0, 0);
   }
 
   //vor oder zureuck schalten

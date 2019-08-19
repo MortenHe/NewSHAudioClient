@@ -76,9 +76,14 @@ hr {
 }
 
 .insertIndex {
-    height: 32px;
+    height: 31px;
 }
 
 .hoverTitle {
     opacity: .6;
+}
+
+.ignore:hover+div {
+    opacity: .4;
+    text-decoration: line-through;
 }

@@ -136,10 +136,15 @@
 
                 <!-- Song einreihen, aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm mr-2"
+                        class="btn btn-sm"
                         (mouseenter)="setHoverTitle(index)"
                         (mouseleave)="resetHoverTitle()"
                         (click)="enqueueSong(index)"><i class="fa fa-plus"></i></button>
+
+                <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
+                <button *ngIf="index !== 0"
+                        class="btn btn-sm mr-2 ignore"
+                        (click)="moveTitleToEnd(index)"><i class="text-danger fa fa-minus"></i></button>
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->
                 <div [ngClass]="{'font-weight-bold': index === 0}"
@@ -151,11 +156,6 @@
                     <i class="fa fa-spinner fa-spin"
                        *ngIf="index === jumpPosition"></i>
                 </div>
-
-                <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
-                <button *ngIf="index !== 0"
-                        class="btn btn-sm ml-auto"
-                        (click)="moveTitleToEnd(index)"><i class="text-danger fa fa-minus"></i></button>
             </div>
 
             <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->

@@ -1,4 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
+import * as path from 'path';
 
 @Pipe({
   name: 'fileName'
@@ -11,9 +12,7 @@ export class FileNamePipe implements PipeTransform {
     if (songName) {
 
       //Datei kommt als kompletter Pfad: nur Dateiname ausgeben, auch Dateiendung .mp3 streichen
-      let songNameDisplay = songName.split(/[\\/]/).pop();
-      songNameDisplay = songNameDisplay.replace(/.mp3/i, '');
-      return songNameDisplay;
+      return path.basename(songName, '.mp3');
     }
   }
 }

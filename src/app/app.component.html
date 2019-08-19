@@ -35,14 +35,14 @@
         <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
 
             <!-- Wrapper -->
-            <div class="col-6 control-content row no-gutters justify-content-between">
+            <div class="col-6 control-content row no-gutters">
 
                 <!-- previous title -->
-                <button class="fa fa-fast-backward ripple"
+                <button class="fa fa-fast-backward ripple mr-2"
                         (click)="changeItem(-1)"></button>
 
                 <!-- toggle pause -->
-                <button class="fa ripple"
+                <button class="fa ripple mr-2"
                         [ngClass]='{
                                 "fa-pause": !paused,
                                     "fa-play": paused  }'
@@ -144,7 +144,7 @@
                 <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
                         class="btn btn-sm mr-2 ignore"
-                        (click)="moveTitleToEnd(index)"><i class="text-danger fa fa-minus"></i></button>
+                        (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->
                 <div [ngClass]="{'font-weight-bold': index === 0}"

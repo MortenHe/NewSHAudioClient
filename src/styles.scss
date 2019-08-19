@@ -2,8 +2,12 @@
 
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
+$color-grey: #212529;
+$color-controls: #ff9292;
+
 body {
     background: #eee;
+    color: $color-grey;
     overflow-y: scroll;
 }
 
@@ -90,7 +94,7 @@ button:focus {
 }
 
 .connection {
-    color: #555;
+    color: $color-grey;
     width: 40px;
     height: 40px;
     font-size: 21px;
@@ -115,5 +119,109 @@ mark {
 
 .active-audio-mode span {
     font-weight: bold;
-    border-bottom: 2px solid #555;
+    border-bottom: 2px solid $color-grey;
+}
+
+.header {
+    background: rgb(255, 146, 146);
+    color: white;
+}
+
+.heading {
+    font-weight: bold;
+    font-size: 18px;
+}
+
+button:disabled {
+    cursor: default;
+    opacity: .3;
+}
+
+.fa-random {
+    opacity: 0.2;
+}
+
+.fa-volume-up,
+.fa-volume-down {
+    font-size: 23px !important;
+    color: $color-controls;
+}
+
+.active {
+    opacity: 1;
+    background: #eee;
+}
+
+.currentSong {
+    font-weight: bold;
+    font-size: 16px;
+    background: rgb(255, 231, 231);
+}
+
+.bg-rose {
+    background: rgb(255, 231, 231);
+}
+
+.fa-fast-backward,
+.fa-fast-forward,
+.fa-play,
+.fa-pause {
+    color: $color-controls;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.fileName {
+    padding: 0px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    width: 100%;
+    overflow: hidden;
+    text-align: left;
+}
+
+.fileName:hover {
+    background: rgb(255, 231, 231);
+}
+
+.align-items-baseline {
+    align-items: baseline;
+}
+
+hr {
+    border-top: 1px solid grey;
+}
+
+.btn:focus {
+    box-shadow: none !important;
+}
+
+.insertIndex {
+    height: 31px;
+}
+
+.hoverTitle {
+    opacity: .6;
+}
+
+.ignore {
+    color: $color-controls !important;
+
+
+    &:hover+div {
+        opacity: .4;
+        text-decoration: line-through;
+    }
+
+    //disable effect hover on mobile devices
+    @media (hover: none) {
+
+        &:hover+div {
+            opacity: 1;
+            text-decoration: none;
+        }
+    }
 }

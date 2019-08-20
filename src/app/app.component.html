@@ -8,15 +8,12 @@
 
             <!-- Modusauswahl (sh, mh, kids) -->
             <div class="col heading">
-                <button class="btn"
-                        [class.active-audio-mode]="audioMode === 'sh'"
-                        (click)="setAudioMode('sh')"><span>SH</span></button>
-                <button class="btn"
-                        [class.active-audio-mode]="audioMode === 'mh'"
-                        (click)="setAudioMode('mh')"><span>MH</span></button>
-                <button class="btn"
-                        [class.active-audio-mode]="audioMode === 'kids'"
-                        (click)="setAudioMode('kids')"><span>Kids</span></button>
+                <ng-container *ngFor="let mode of modes">
+                    <button *ngIf="mode.active"
+                            class="btn"
+                            [class.active-audio-mode]="audioMode === mode.id"
+                            (click)="setAudioMode(mode.id)"><span>{{mode.label}}</span></button>
+                </ng-container>
             </div>
 
             <!-- Zustand ueber Verbindung zu WSS -->
@@ -100,7 +97,7 @@
                      [class.pb-3]="last">
 
                     <!-- Song einreihen -->
-                    <button class="btn btn-sm mr-2"
+                    <button class="btn btn-sm mr-2 ripple"
                             (mouseenter)="setHoverTitle(file.index)"
                             (mouseleave)="resetHoverTitle()"
                             (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
@@ -136,14 +133,14 @@
 
                 <!-- Song einreihen, aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm"
+                        class="btn btn-sm ripple"
                         (mouseenter)="setHoverTitle(index)"
                         (mouseleave)="resetHoverTitle()"
                         (click)="enqueueSong(index)"><i class="fa fa-plus"></i></button>
 
                 <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm mr-2 ignore"
+                        class="btn btn-sm mr-2 ignore ripple"
                         (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->

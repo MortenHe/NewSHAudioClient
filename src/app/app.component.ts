@@ -3,6 +3,7 @@ import { BackendService } from './services/backend.service';
 import { FormControl } from '@angular/forms';
 import { FilterListPipe } from './pipes/filter-list.pipe';
 import { FileNamePipe } from './pipes/file-name.pipe';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-root',
@@ -11,6 +12,9 @@ import { FileNamePipe } from './pipes/file-name.pipe';
 })
 
 export class AppComponent {
+
+  //AudioModes laden aus config
+  modes = environment.modes;
 
   //Audiomodus (sh, mh, kids)
   audioMode = "";

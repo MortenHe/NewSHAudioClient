@@ -90,14 +90,14 @@
              class="bg-white">
 
             <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
-            <ng-container *ngFor="let file of filteredFiles | orderBy; last as last">
+            <ng-container *ngFor="let file of filteredFiles | orderBy | slice:0:20; last as last">
 
                 <!-- Song einreihen Button und Songtitel formattiert -->
                 <div class="d-flex mx-3 pb-2 align-items-baseline bg-white"
                      [class.pb-3]="last">
 
                     <!-- Song einreihen -->
-                    <button class="btn btn-sm mr-2 ripple"
+                    <button class="btn btn-sm mr-2"
                             (mouseenter)="setHoverTitle(file.index)"
                             (mouseleave)="resetHoverTitle()"
                             (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
@@ -115,7 +115,7 @@
         </div>
 
         <!-- Playlisttitel und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
-        <div *ngFor="let file of files; index as index, last as last, first as first"
+        <div *ngFor="let file of files | slice:0:20; trackBy: trackByFn, index as index, last as last, first as first"
              class="bg-white"
              [ngClass]="{
                  'pt-0': first && !filteredFiles.length,
@@ -133,14 +133,14 @@
 
                 <!-- Song einreihen, aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm ripple"
+                        class="btn btn-sm"
                         (mouseenter)="setHoverTitle(index)"
                         (mouseleave)="resetHoverTitle()"
                         (click)="enqueueSong(index)"><i class="fa fa-plus"></i></button>
 
                 <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
                 <button *ngIf="index !== 0"
-                        class="btn btn-sm mr-2 ignore ripple"
+                        class="btn btn-sm mr-2 ignore"
                         (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->

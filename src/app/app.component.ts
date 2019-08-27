@@ -74,6 +74,7 @@ export class AppComponent {
     this.bs.getFiles().subscribe(files => {
       this.files = files;
 
+      //???
       this.filterFiles();
 
       //Jump Position zuruecksetzen, wenn neue Titelliste vorliegt
@@ -229,6 +230,10 @@ export class AppComponent {
         }
       }
     }
+  }
+
+  trackByFn(index, node) {
+    return node;
   }
 
   //HoverTitle setzen fuer Oberflaeche (welcher Song wird eingefuegt)

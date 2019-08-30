@@ -78,7 +78,7 @@
                 <!-- Suchefeld -->
                 <input autofocus
                        id="searchField"
-                       placeholder="Lied suchen (mind. 2 Buchstaben)"
+                       placeholder="Lied suchen"
                        [formControl]="titleSearch"
                        class="col ml-2"
                        type="search">
@@ -103,7 +103,7 @@
                             (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
 
                     <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
-                    <div class="title-to-highlight cursor-pointer flex-grow-1"
+                    <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
                          (click)="jumpToFromSearch(file.index)"
                          [highlight]="titleSearch.value">{{file.fileName}}</div>
                 </div>
@@ -145,7 +145,7 @@
 
                 <!-- Titelinfo, aktuellen Song fett darstellen -->
                 <div [ngClass]="{'font-weight-bold': index === 0}"
-                     class="cursor-pointer"
+                     class="cursor-pointer jump-to"
                      (click)="jumpTo(index)">
                     {{file | fileName}}
 

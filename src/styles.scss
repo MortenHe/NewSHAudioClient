@@ -207,6 +207,12 @@ hr {
     opacity: .6;
 }
 
+.jump-to {
+    &:hover {
+        font-weight: bold;
+    }
+}
+
 .ignore {
     color: $color-controls !important;
 

@@ -1,0 +1,3 @@
+- Ripple bei Enqeue / Remove (setTimeout?)
+- Playsymbol gleiche Breite wie Enqeue
+- Reorder Queued List

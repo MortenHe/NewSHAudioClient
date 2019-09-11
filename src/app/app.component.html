@@ -92,19 +92,19 @@
             <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
             <ng-container *ngFor="let file of filteredFiles | orderBy | slice:0:20; last as last">
 
-                <!-- Song einreihen Button und Songtitel formattiert -->
+                <!-- Song abspielen Button und Songtitel formattiert -->
                 <div class="d-flex mx-3 pb-2 align-items-baseline bg-white"
                      [class.pb-3]="last">
 
-                    <!-- Song einreihen -->
+                    <!-- Song abspielen -->
                     <button class="btn btn-sm mr-2"
-                            (mouseenter)="setHoverTitle(file.index)"
-                            (mouseleave)="resetHoverTitle()"
-                            (click)="enqueueSongFromSearch(file.index)"><i class="fa fa-plus"></i></button>
+                            (click)="jumpToFromSearch(file.index)"><i class="fa fa-play"></i></button>
 
                     <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
                     <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
-                         (click)="jumpToFromSearch(file.index)"
+                         (mouseenter)="setHoverTitle(file.index)"
+                         (mouseleave)="resetHoverTitle()"
+                         (click)="enqueueSongFromSearch(file.index)"
                          [highlight]="titleSearch.value">{{file.fileName}}</div>
                 </div>
 
@@ -115,53 +115,61 @@
         </div>
 
         <!-- Playlisttitel und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
-        <div *ngFor="let file of files | slice:0:20; trackBy: trackByFn, index as index, last as last, first as first"
-             class="bg-white"
-             [ngClass]="{
+        <!-- sortierbare Playlist -->
+        <div [sortablejs]="files"
+             (update)=sortDone($event)
+             (filter)=eventInsideSort($event)>
+            <div *ngFor="let file of files | slice:0:20; trackBy: trackByFn, index as index, last as last, first as first"
+                 class="bg-white drag"
+                 [ngClass]="{
+                 'drag': index > 0 && index < insertIndex,
                  'pt-0': first && !filteredFiles.length,
                  'pt-3': first && filteredFiles.length,
-                 'pt-2': !first,
+                 'pt-2': !first && index !== insertIndex,
                  'pb-2 border-radius-bottom': last
                 }">
 
-            <!-- Einreihe-Symbol und Songtitel -->
-            <div class="ml-3 mr-3 d-flex align-items-baseline">
+                <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
+                <div class="ml-3 pl-2 d-flex insertIndex align-items-center"
+                     *ngIf="index === insertIndex">
+                    <i class="fa fa-arrow-right text-warning"></i>
 
-                <!-- Play-Symbol bei 1. Titel -->
-                <i *ngIf="index === 0"
-                   class="pl-2 mr-3 fa fa-play text-success"></i>
-
-                <!-- Song einreihen, aber nicht bei Index 0 -->
-                <button *ngIf="index !== 0"
-                        class="btn btn-sm"
-                        (mouseenter)="setHoverTitle(index)"
-                        (mouseleave)="resetHoverTitle()"
-                        (click)="enqueueSong(index)"><i class="fa fa-plus"></i></button>
-
-                <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
-                <button *ngIf="index !== 0"
-                        class="btn btn-sm mr-2 ignore"
-                        (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
-
-                <!-- Titelinfo, aktuellen Song fett darstellen -->
-                <div [ngClass]="{'font-weight-bold': index === 0}"
-                     class="cursor-pointer jump-to"
-                     (click)="jumpTo(index)">
-                    {{file | fileName}}
-
-                    <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
-                    <i class="fa fa-spinner fa-spin"
-                       *ngIf="index === jumpPosition"></i>
+                    <!-- Info welcher Titel hier eingefuegt wird -->
+                    <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
                 </div>
-            </div>
 
-            <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
-            <div class="ml-3 pt-2 pl-2 d-flex insertIndex align-items-center"
-                 *ngIf="(index + 1) === insertIndex">
-                <i class="fa fa-arrow-right text-warning"></i>
+                <!-- Einreihe-Symbol und Songtitel -->
+                <div class="ml-3 mr-3 d-flex align-items-baseline">
 
-                <!-- Info welcher Titel hier eingefuegt wird -->
-                <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
+                    <!-- Play-Symbol bei 1. Titel -->
+                    <i *ngIf="index === 0"
+                       class="pl-2 mr-3 fa fa-play text-success"></i>
+
+                    <!-- Song abspielen, aber nicht bei Index 0 -->
+                    <button *ngIf="index !== 0"
+                            class="btn btn-sm mr-2"
+                            (click)="jumpTo(index)"><i class="fa fa-play"></i></button>
+
+                    <!-- Titelinfo, aktuellen Song fett darstellen, im oberen Bereich ist Liste sortierbar -->
+                    <div [ngClass]="{
+                        'font-weight-bold': index === 0,
+                        'sort-handle': index > 0 && index < insertIndex}"
+                         class="cursor-pointer"
+                         (mouseenter)="setHoverTitle(index)"
+                         (mouseleave)="resetHoverTitle()"
+                         (click)="enqueueSong(index)">
+                        {{file | fileName}}
+
+                        <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
+                        <i class="fa fa-spinner fa-spin"
+                           *ngIf="index === jumpPosition"></i>
+                    </div>
+
+                    <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
+                    <button *ngIf="index !== 0"
+                            class="btn btn-sm ignore ml-auto"
+                            (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
+                </div>
             </div>
         </div>
     </div>

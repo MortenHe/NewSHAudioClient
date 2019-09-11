@@ -170,6 +170,16 @@ export class AppComponent {
     this.titleSearch.setValue("");
   }
 
+  //Wenn Sortiervorgang abgeschlossen ist, Server ueber neue Sortierung informieren
+  sortDone(event: any) {
+    this.bs.sendMessage({
+      type: "sort-playlist", value: {
+        from: event.oldIndex,
+        to: event.newIndex
+      }
+    });
+  };
+
   //zu gewissem Titel in Playlist springen
   jumpTo(position: number) {
     this.bs.sendMessage({ type: "jump-to", value: position });

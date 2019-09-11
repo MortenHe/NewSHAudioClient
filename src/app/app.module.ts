@@ -10,6 +10,9 @@ import { FileNamePipe } from './pipes/file-name.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
 
+//Sortable JS
+import { SortablejsModule } from 'ngx-sortablejs';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +24,14 @@ import { HighlightDirective } from './directives/highlight.directive';
   imports: [
     BrowserModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    SortablejsModule.forRoot({
+      animation: 350,
+      draggable: '.drag',
+      handle: '.sort-handle',
+      filter: ".ignore-sort",
+      chosenClass: "sortable-chosen"
+    }),
   ],
   providers: [BackendService],
   bootstrap: [AppComponent]

@@ -247,8 +247,11 @@ export class AppComponent {
   }
 
   //HoverTitle setzen fuer Oberflaeche (welcher Song wird eingefuegt)
+  //nur fuer Bereich hinter Einfuegemarke. Oberhalb davor wir per drag & drop sortiert
   setHoverTitle(index) {
-    this.hoverTitle = this.files[index];
+    if (index >= this.insertIndex) {
+      this.hoverTitle = this.files[index];
+    }
   }
 
   //HoverTitle zuruecksetzen

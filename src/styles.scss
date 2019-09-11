@@ -169,6 +169,10 @@ button:disabled {
     color: $color-controls;
 }
 
+.play-button {
+    color: $color-grey;
+}
+
 input {
     border: none;
     outline: none;
@@ -201,14 +205,69 @@ hr {
 
 .insertIndex {
     height: 31px;
+    color: $color-controls;
 }
 
 .hoverTitle {
     opacity: .6;
 }
 
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-10 {
+    opacity: 0.1;
+}
+
+.opacity-20 {
+    opacity: 0.2;
+}
+
+.opacity-30 {
+    opacity: 0.3;
+}
+
+.opacity-40 {
+    opacity: 0.4;
+}
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.opacity-60 {
+    opacity: 0.6;
+}
+
+.opacity-70 {
+    opacity: 0.7;
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}
+
+.opacity-90 {
+    opacity: 0.9;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+.playing-line {
+    height: 31px;
+    display: flex;
+    align-items: center;
+}
+
+.sort-handle {
+    cursor: move;
+}
+
 .ignore {
-    color: $color-controls !important;
+    color: $color-grey !important;
 
     &:hover+div {
         opacity: .4;

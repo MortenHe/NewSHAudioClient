@@ -1,0 +1,44 @@
+<!-- Suchfeld und Trefferliste -->
+<!-- Suchfeld: Label besteht aus Icon und Suchfeld -->
+<label class="search-field form-control d-flex no-gutters align-items-center p-1 m-0"
+       for="searchField">
+
+    <!-- Such-Symbol -->
+    <i class="fa fa-search ml-2"></i>
+
+    <!-- Suchefeld -->
+    <input autofocus
+           id="searchField"
+           placeholder="Lied suchen"
+           [formControl]="titleSearch"
+           class="col ml-2"
+           type="search">
+</label>
+
+<!-- Trefferliste der Suchanfrage -->
+<div *ngIf="filteredFiles.length"
+     class="bg-white mt-2">
+
+    <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
+    <ng-container *ngFor="let file of filteredFiles | orderBy | slice:0:20; last as last">
+
+        <!-- Song abspielen Button und Songtitel formattiert -->
+        <div class="d-flex pb-2 align-items-baseline bg-white">
+
+            <!-- Song abspielen -->
+            <button class="btn btn-sm mr-2"
+                    (click)="jumpToFromSearch(file.index)"><i class="fa fa-play"></i></button>
+
+            <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
+            <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
+                 (mouseenter)="setHoverTitle(file.index)"
+                 (mouseleave)="resetHoverTitle()"
+                 (click)="enqueueSongFromSearch(file.index)"
+                 [highlight]="titleSearch.value">{{file.fileName}}</div>
+        </div>
+
+        <!-- Trennlinie nach letztem Eintrag -->
+        <hr *ngIf="last"
+            class="my-0 opacity-50">
+    </ng-container>
+</div>

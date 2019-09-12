@@ -1,0 +1,10 @@
+<!-- Lautstaerke -->
+<!-- leiser -->
+<button class="fa fa-volume-down ripple"
+        (click)="changeVolume(false)"
+        [disabled]="volume === 0"></button>
+
+<!-- lauter -->
+<button class="fa fa-volume-up ripple"
+        [disabled]="volume === 100"
+        (click)="changeVolume(true)"></button>

@@ -1,0 +1,11 @@
+<!-- Pi-Controls -->
+<!-- Zustand ueber Verbindung zu WSS -->
+<button class="btn connection ripple"
+        [class.unconnected]="!connected"
+        (click)="activateApp()"><i class="fa fa-wifi"></i></button>
+
+<!-- Button zum Pi herunterfahren -->
+<button (click)="shutdownPi()"
+        [class.active]="clicks > 0"
+        class="btn fa fa-power-off button-clean shutdown">
+</button>

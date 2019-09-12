@@ -1,0 +1,15 @@
+<!-- Player Controls -->
+<!-- previous title -->
+<button class="fa fa-fast-backward ripple mr-2"
+        (click)="changeItem(-1)"></button>
+
+<!-- toggle pause -->
+<button class="fa ripple mr-2"
+        [ngClass]='{
+            "fa-pause": !paused,
+            "fa-play": paused  }'
+        (click)="togglePaused()"></button>
+
+<!-- next title -->
+<button class="fa fa-fast-forward ripple"
+        (click)="changeItem(1)"></button>

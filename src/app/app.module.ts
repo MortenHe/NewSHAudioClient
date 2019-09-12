@@ -13,13 +13,27 @@ import { HighlightDirective } from './directives/highlight.directive';
 //Sortable JS
 import { SortablejsModule } from 'ngx-sortablejs';
 
+//eigene Komponenten
+import { PlayerControlsComponent } from './components/player-controls/player-controls.component';
+import { VolumeControlsComponent } from './components/volume-controls/volume-controls.component';
+import { SearchFieldComponent } from './components/search-field/search-field.component';
+import { ModeSelectComponent } from './components/mode-select/mode-select.component';
+import { PiControlsComponent } from './components/pi-controls/pi-controls.component';
+import { PlayListComponent } from './components/play-list/play-list.component';
+
 @NgModule({
   declarations: [
     AppComponent,
+    PlayerControlsComponent,
     FilterListPipe,
     FileNamePipe,
     OrderByPipe,
-    HighlightDirective
+    HighlightDirective,
+    VolumeControlsComponent,
+    SearchFieldComponent,
+    ModeSelectComponent,
+    PiControlsComponent,
+    PlayListComponent
   ],
   imports: [
     BrowserModule,

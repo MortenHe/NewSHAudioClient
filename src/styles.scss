@@ -195,10 +195,6 @@ input {
     align-items: baseline;
 }
 
-hr {
-    border-top: 1px solid grey;
-}
-
 .btn:focus {
     box-shadow: none !important;
 }
@@ -282,4 +278,8 @@ hr {
             text-decoration: none;
         }
     }
+}
+
+hr {
+    border-top: 1px solid $color-grey;
 }

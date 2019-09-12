@@ -4,182 +4,37 @@
 
     <!-- App-Container -->
     <div class="app-content flex-grow-1 shadow">
+
+        <!-- 1. Zeile: Mode-Auswahl und Pi-Controls -->
         <div class="row no-gutters header py-1 px-3 align-items-center">
 
             <!-- Modusauswahl (sh, mh, kids) -->
-            <div class="col heading">
-                <ng-container *ngFor="let mode of modes">
-                    <button *ngIf="mode.active"
-                            class="btn"
-                            [class.active-audio-mode]="audioMode === mode.id"
-                            (click)="setAudioMode(mode.id)"><span>{{mode.label}}</span></button>
-                </ng-container>
-            </div>
+            <mode-select class="col heading"></mode-select>
 
-            <!-- Zustand ueber Verbindung zu WSS -->
-            <button class="btn connection ripple"
-                    [class.unconnected]="!connected"
-                    (click)="activateApp()"><i class="fa fa-wifi"></i></button>
-
-            <!-- Button zum Pi herunterfahren, wrapper damit sich opacity von Button nicht auf den Schatten auswirkt -->
-            <button (click)="shutdownPi()"
-                    [class.active]="clicks > 0"
-                    class="btn fa fa-power-off button-clean shutdown">
-            </button>
+            <!-- Pi-Control (Connection und Shutdown) -->
+            <pi-controls></pi-controls>
         </div>
 
-        <!-- prev, pause, next -->
+        <!-- 2. Zeile: Player-Controls und Lautstaerke -->
         <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
 
-            <!-- Wrapper -->
-            <div class="col-6 control-content row no-gutters">
-
-                <!-- previous title -->
-                <button class="fa fa-fast-backward ripple mr-2"
-                        (click)="changeItem(-1)"></button>
-
-                <!-- toggle pause -->
-                <button class="fa ripple mr-2"
-                        [ngClass]='{
-                                "fa-pause": !paused,
-                                    "fa-play": paused  }'
-                        (click)="togglePaused()"></button>
-
-                <!-- next title -->
-                <button class="fa fa-fast-forward ripple"
-                        (click)="changeItem(1)"></button>
-            </div>
+            <!-- Player-Controls: prev, pause, next -->
+            <player-controls class="col-6 control-content row no-gutters"></player-controls>
 
             <!-- Lautstaerke -->
-            <div class="col row no-gutters justify-content-end">
-
-                <!-- leiser -->
-                <button class="fa fa-volume-down ripple"
-                        (click)="changeVolume(false)"
-                        [disabled]="volume === 0"></button>
-
-                <!-- lauter -->
-                <button class="fa fa-volume-up ripple"
-                        [disabled]="volume === 100"
-                        (click)="changeVolume(true)"></button>
-            </div>
+            <volume-controls class="col row no-gutters justify-content-end"></volume-controls>
         </div>
 
-        <!-- Suchfeld -->
-        <div class="pt-3 px-3 pb-3 bg-white">
+        <!-- 3. Zeile: Suchfeld und Trefferliste -->
+        <search-field class="pt-3 px-3 pb-3 bg-white d-flex flex-column"></search-field>
 
-            <!-- Label besteht auch Icon und Suchfeld -->
-            <label class="search-field form-control d-flex no-gutters align-items-center p-1 m-0"
-                   for="searchField">
-
-                <!-- Such-Symbol -->
-                <i class="fa fa-search ml-2"></i>
-
-                <!-- Suchefeld -->
-                <input autofocus
-                       id="searchField"
-                       placeholder="Lied suchen"
-                       [formControl]="titleSearch"
-                       class="col ml-2"
-                       type="search">
-            </label>
-        </div>
-
-        <!-- Trefferliste der Suchanfrage -->
-        <div *ngIf="filteredFiles.length"
-             class="bg-white">
-
-            <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
-            <ng-container *ngFor="let file of filteredFiles | orderBy | slice:0:20; last as last">
-
-                <!-- Song abspielen Button und Songtitel formattiert -->
-                <div class="d-flex mx-3 pb-2 align-items-baseline bg-white"
-                     [class.pb-3]="last">
-
-                    <!-- Song abspielen -->
-                    <button class="btn btn-sm mr-2"
-                            (click)="jumpToFromSearch(file.index)"><i class="fa fa-play"></i></button>
-
-                    <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
-                    <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
-                         (mouseenter)="setHoverTitle(file.index)"
-                         (mouseleave)="resetHoverTitle()"
-                         (click)="enqueueSongFromSearch(file.index)"
-                         [highlight]="titleSearch.value">{{file.fileName}}</div>
-                </div>
-
-                <!-- Trennlinie nach letztem Eintrag -->
-                <hr *ngIf="last"
-                    class="mx-3 my-0">
-            </ng-container>
-        </div>
-
-        <!-- Playlisttitel und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
-        <!-- sortierbare Playlist -->
-        <div [sortablejs]="files"
-             (update)=sortDone($event)
-             (filter)=eventInsideSort($event)>
-            <div *ngFor="let file of files | slice:0:20; trackBy: trackByFn, index as index, last as last, first as first"
-                 class="bg-white drag"
-                 [ngClass]="{
-                 'playing-line': index === 0,
-                 'drag': index > 0 && index < insertIndex,
-                 'pt-0': first && !filteredFiles.length,
-                 'pt-3': first && filteredFiles.length,
-                 'pt-2': !first && index !== insertIndex,
-                 'pb-2 border-radius-bottom': last
-                }">
-
-                <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
-                <div class="ml-3 pl-2 d-flex insertIndex align-items-center"
-                     *ngIf="index === insertIndex">
-                    <i class="fa fa-arrow-right"></i>
-
-                    <!-- Info welcher Titel hier eingefuegt wird -->
-                    <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
-                </div>
-
-                <!-- Einreihe-Symbol und Songtitel -->
-                <div class="ml-3 mr-3 d-flex no-gutters align-items-baseline">
-
-                    <!-- Play-Symbol bei 1. Titel -->
-                    <button *ngIf="index === 0"
-                            class="btn btn-sm pl-2 mr-2 order-1">
-                        <i class="fa fa-play"></i></button>
-
-                    <!-- Song abspielen, aber nicht bei Index 0 -->
-                    <button *ngIf="index !== 0"
-                            class="btn btn-sm mr-2 order-2"
-                            (click)="jumpTo(index)"><i class="fa fa-play play-button opacity-50"></i></button>
-
-                    <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0, 
-                    CSS Trick mit flex-order. Damit durchstreichen funktioniert und Button trotzdem hiten steht -->
-                    <button *ngIf="index !== 0"
-                            class="btn btn-sm ignore opacity-50 order-4"
-                            (click)="moveTitleToEnd(index)"><i class="fa fa-minus"></i></button>
-
-                    <!-- Titelinfo, aktuellen Song fett darstellen, im oberen Bereich ist Liste sortierbar -->
-                    <div class="cursor-pointer order-3 col"
-                         [ngClass]="{
-                        'font-weight-bold': index === 0,
-                        'sort-handle': index > 0 && index < insertIndex}"
-                         (mouseenter)="setHoverTitle(index)"
-                         (mouseleave)="resetHoverTitle()"
-                         (click)="enqueueSong(index)">
-                        {{file | fileName}}
-
-                        <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
-                        <i class="fa fa-spinner fa-spin"
-                           *ngIf="index === jumpPosition"></i>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <!-- 4. Zeile Playlist und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
+        <play-list></play-list>
     </div>
 </div>
 
-<!-- Anzeigen, wenn Pi heruntergefahren wurde -->
+<!-- Block anzeigen, wenn Pi heruntergefahren wurde -->
 <div *ngIf="shutdown"
-     class="container mr-0 ml-0 no-gutters p-3">
-    Die Anwendung wurde beendet.
+     class="container mr-0 ml-0 no-gutters p-3 text-center">
+    Der Player wurde beendet.
 </div>

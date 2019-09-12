@@ -20,6 +20,7 @@ import { SearchFieldComponent } from './components/search-field/search-field.com
 import { ModeSelectComponent } from './components/mode-select/mode-select.component';
 import { PiControlsComponent } from './components/pi-controls/pi-controls.component';
 import { PlayListComponent } from './components/play-list/play-list.component';
+import { FileService } from './service/file.service';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,10 @@ import { PlayListComponent } from './components/play-list/play-list.component';
       chosenClass: "sortable-chosen"
     }),
   ],
-  providers: [BackendService],
+  providers: [
+    BackendService,
+    FileService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

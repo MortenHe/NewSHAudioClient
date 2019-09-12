@@ -3,6 +3,7 @@ import { FormControl } from '@angular/forms';
 import { FilterListPipe } from 'src/app/pipes/filter-list.pipe';
 import { FileNamePipe } from 'src/app/pipes/file-name.pipe';
 import { BackendService } from 'src/app/services/backend.service';
+import { FileService } from 'src/app/service/file.service';
 
 @Component({
   selector: 'search-field',
@@ -24,7 +25,7 @@ export class SearchFieldComponent implements OnInit {
   filterListPipe = new FilterListPipe();
   fileNamePipe = new FileNamePipe();
 
-  constructor(private bs: BackendService) { }
+  constructor(private bs: BackendService, private fs: FileService) { }
 
   ngOnInit() {
 
@@ -49,13 +50,13 @@ export class SearchFieldComponent implements OnInit {
     if (term.length >= 2) {
 
       //Titelliste anhand des Terms filtern
-      let tempFilteredFiles = this.filterListPipe.transform(this.files, term);
+      const tempFilteredFiles = this.filterListPipe.transform(this.files, term);
 
       //Ueber gefiltertete Titelliste gehen
       for (let file of tempFilteredFiles) {
 
         //Namensform anpassen (Pfad und Dateiendung weg)
-        let tempFileName = this.fileNamePipe.transform(file.fileName);
+        const tempFileName = this.fileNamePipe.transform(file.fileName);
 
         //Titel (ausser dem aktuell laufemden) in Liste der gefilterteten Titel einfuegen
         if (file.index !== 0) {
@@ -68,16 +69,41 @@ export class SearchFieldComponent implements OnInit {
     }
   }
 
-  //Aus Trefferliste der Suche einen Titel einreihen und Suchfeld danach leeren
-  enqueueSongFromSearch(index) {
-    //this.enqueueSong(index);
-    this.titleSearch.setValue("");
-  }
-
-  //Aus Trefferliste der Suche zu einem Titel springen und Suchfeld danach leeren
+  //Aus Trefferliste der Suche zu einem Titel springen
   jumpToFromSearch(position: number) {
-    //this.jumpTo(position);
+    this.bs.sendMessage({ type: "jump-to", value: position });
+
+    //Spinner anzeigen, bis der Titel geladen wurde
+    this.fs.setJumpPosition(position);
+
+    //nach oben scrollen
+    window.scroll(0, 0);
+
+    //Suchfeld leeren
     this.titleSearch.setValue("");
   }
 
+  //Aus Treferliste der Suche einen Titel einreihen
+  enqueueSongFromSearch(index) {
+    this.bs.sendMessage({
+      type: "enqueue-title",
+      value: index
+    });
+
+    //Hover Titel zuruecksetzen
+    this.resetHoverTitle();
+
+    //Trefferliste leeren
+    this.titleSearch.setValue("");
+  }
+
+  //Hover Titel setzen
+  setHoverTitle(index) {
+    this.fs.setHoverTitle(this.files[index]);
+  }
+
+  //Hover Titel zuruecksetzen
+  resetHoverTitle() {
+    this.fs.setHoverTitle("");
+  }
 }

@@ -1,6 +1,11 @@
+MEDIUM
+- CSS in Komponenten aufteilen
+- Breite Spinner bei Trefferliste
+- Farben über Zeilen definieren (1. Zeile graue Schrift, 2. Zeile rota Schrift)
 - Ripple bei Enqeue / Remove (setTimeout?) vs. Spinner
-- Reorder Queued List
-- Aufteilung in Komponenten
+- config pw vs. marlen
+
+LOW
 - Trackby für Trefferliste
 - Nur Reihenfolge der Tracks von Server erhalten, Anzeige der Titel über Array
-- config pw vs. marlen
+- let vs. const

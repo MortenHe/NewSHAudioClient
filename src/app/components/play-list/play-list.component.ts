@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/app/services/backend.service';
+import { FileService } from 'src/app/service/file.service';
 
 @Component({
   selector: 'play-list',
@@ -15,12 +16,12 @@ export class PlayListComponent implements OnInit {
   insertIndex = 1;
 
   //temp. Wert, wohin gerade gesprungen werden soll
-  jumpPosition = -1;
+  jumpPosition: number = -1;
 
   //Titel, der gearde gehovert wird
   hoverTitle = "";
 
-  constructor(private bs: BackendService) { }
+  constructor(private bs: BackendService, private fs: FileService) { }
 
   ngOnInit() {
 
@@ -32,10 +33,38 @@ export class PlayListComponent implements OnInit {
       this.jumpPosition = -1
     });
 
-    //insertIndex abbonieren
+    //insertIndex abonnieren
     this.bs.getInsertIndex().subscribe(insertIndex => {
       this.insertIndex = insertIndex;
     });
+
+    //jumpPosition abonnieren
+    this.fs.getJumpPosition().subscribe(jumpPosition => {
+      this.jumpPosition = jumpPosition;
+    });
+
+    //hoverTitle abonnieren
+    this.fs.getHoverTitle().subscribe(hoverTitle => {
+      this.hoverTitle = hoverTitle;
+    });
+  }
+
+  //zu gewissem Titel in Playlist springen
+  jumpTo(position: number) {
+    this.bs.sendMessage({ type: "jump-to", value: position });
+
+    //Wenn zu einem anderen Titel als dem aktuellen gesprungen werden soll, bei diesem Eintrag einen Spinner anzeigen, bis der Titel geladen wurde
+    if (position !== 0) {
+      this.fs.setJumpPosition(position);
+    }
+
+    //nach oben scrollen
+    window.scroll(0, 0);
+  }
+
+  //ist Eintrag sortierbar? Nur im oberen Bereich, nicht 1. Titel, nur wenn mehrere Titel zum Umsortieren vorhanden
+  draggable(index) {
+    return (index > 0 && index < this.insertIndex && this.insertIndex > 2);
   }
 
   //Wenn Sortiervorgang abgeschlossen ist, Server ueber neue Sortierung informieren
@@ -48,32 +77,29 @@ export class PlayListComponent implements OnInit {
     });
   }
 
-  //zu gewissem Titel in Playlist springen
-  jumpTo(position: number) {
-    this.bs.sendMessage({ type: "jump-to", value: position });
-
-    //Wenn zu einem anderen Titel als dem aktuellen gesprungen werden soll, bei diesem Eintrag einen Spinner anzeigen, bis der Titel geladen wurde
-    if (position !== 0) {
-      this.jumpPosition = position;
-    }
-
-    //nach oben scrollen
-    window.scroll(0, 0);
-  }
-
-  //Titel einreihen
+  //Titel einreihen (gueltig fuer Bereich unterhalb der Einfuegemarke)
   enqueueSong(index) {
-
-    //Titel an passender Stelle einreihen, aber aktuellen Titel kann man nicht einreihen
-    if (index !== 0) {
+    if (index >= this.insertIndex) {
       this.bs.sendMessage({
         type: "enqueue-title",
         value: index
       });
     }
 
-    //Hover Titel wieder zuruecksetzen
-    //this.resetHoverTitle();
+    //Hover Titel zuruecksetzen
+    this.resetHoverTitle();
+  }
+
+  //Hover Titel setzen (gueltig fuer Bereich unterhalb der Einfuegemarke)
+  setHoverTitle(index) {
+    if (index >= this.insertIndex) {
+      this.fs.setHoverTitle(this.files[index]);
+    }
+  }
+
+  //Hover Titel zuruecksetzen
+  resetHoverTitle() {
+    this.fs.setHoverTitle("");
   }
 
   //Titel ans Ende der Playlist verschieben (nicht bei aktuellem Titel moeglich)

@@ -1,12 +1,10 @@
-/* You can add global styles to this file, and also import other style files */
-
 @import '../node_modules/bootstrap/dist/css/bootstrap.css';
 
-$color-grey: #212529;
-$color-controls: #ff9292;
+//eigene Variablen
+@import "~src/scss/variables.scss";
 
 body {
-    background: #eee;
+    background: $color-bg;
     color: $color-grey;
     overflow-y: scroll;
 }
@@ -16,25 +14,74 @@ body {
     max-width: 600px;
 }
 
-.app-container {
-    margin-top: 15px;
-    margin-bottom: 15px;
-    margin-left: 15px;
-    margin-right: 15px;
+.cursor-pointer {
+    cursor: pointer;
 }
 
-.header {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
+button:disabled {
+    cursor: default;
+    opacity: .3;
 }
 
-.border-radius-bottom {
-    border-bottom-left-radius: 5px;
-    border-bottom-right-radius: 5px;
+.btn:focus {
+    box-shadow: none !important;
+}
+
+input {
+    border: none;
+    outline: none;
+}
+
+.opacity-0 {
+    opacity: 0;
+}
+
+.opacity-10 {
+    opacity: 0.1;
+}
+
+.opacity-20 {
+    opacity: 0.2;
+}
+
+.opacity-30 {
+    opacity: 0.3;
+}
+
+.opacity-40 {
+    opacity: 0.4;
+}
+
+.opacity-50 {
+    opacity: 0.5;
+}
+
+.opacity-60 {
+    opacity: 0.6;
+}
+
+.opacity-70 {
+    opacity: 0.7;
+}
+
+.opacity-80 {
+    opacity: 0.8;
+}
+
+.opacity-90 {
+    opacity: 0.9;
+}
+
+.opacity-100 {
+    opacity: 1;
+}
+
+mark {
+    padding: 0;
+    background: $color-rose;
 }
 
 /* Ripple Button Effect fuer Touch */
-
 button {
     border: none;
     background: none;
@@ -83,203 +130,4 @@ button:focus {
     transform: scale(0, 0);
     opacity: .2;
     transition: 0s;
-}
-
-.cursor-pointer {
-    cursor: pointer;
-}
-
-.m_l_10 {
-    margin-left: 10px;
-}
-
-.connection {
-    color: $color-grey;
-    width: 40px;
-    height: 40px;
-    font-size: 21px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.shutdown {
-    width: 40px;
-    height: 40px;
-    border-radius: 40px;
-}
-
-.unconnected {
-    opacity: .3;
-}
-
-mark {
-    padding: 0;
-    background: #ffc107;
-}
-
-.active-audio-mode span {
-    font-weight: bold;
-    border-bottom: 2px solid $color-grey;
-}
-
-.header {
-    background: rgb(255, 146, 146);
-    color: white;
-}
-
-.heading {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-button:disabled {
-    cursor: default;
-    opacity: .3;
-}
-
-.fa-random {
-    opacity: 0.2;
-}
-
-.fa-volume-up,
-.fa-volume-down {
-    font-size: 23px !important;
-    color: $color-controls;
-}
-
-.active {
-    opacity: 1;
-    background: #eee;
-}
-
-.currentSong {
-    font-weight: bold;
-    font-size: 16px;
-    background: rgb(255, 231, 231);
-}
-
-.bg-rose {
-    background: rgb(255, 231, 231);
-}
-
-.fa-fast-backward,
-.fa-fast-forward,
-.fa-play,
-.fa-pause {
-    color: $color-controls;
-}
-
-.play-button {
-    color: $color-grey;
-}
-
-input {
-    border: none;
-    outline: none;
-}
-
-.fileName {
-    padding: 0px;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    width: 100%;
-    overflow: hidden;
-    text-align: left;
-}
-
-.fileName:hover {
-    background: rgb(255, 231, 231);
-}
-
-.align-items-baseline {
-    align-items: baseline;
-}
-
-.btn:focus {
-    box-shadow: none !important;
-}
-
-.insertIndex {
-    height: 31px;
-    color: $color-controls;
-}
-
-.hoverTitle {
-    opacity: .6;
-}
-
-.opacity-0 {
-    opacity: 0;
-}
-
-.opacity-10 {
-    opacity: 0.1;
-}
-
-.opacity-20 {
-    opacity: 0.2;
-}
-
-.opacity-30 {
-    opacity: 0.3;
-}
-
-.opacity-40 {
-    opacity: 0.4;
-}
-
-.opacity-50 {
-    opacity: 0.5;
-}
-
-.opacity-60 {
-    opacity: 0.6;
-}
-
-.opacity-70 {
-    opacity: 0.7;
-}
-
-.opacity-80 {
-    opacity: 0.8;
-}
-
-.opacity-90 {
-    opacity: 0.9;
-}
-
-.opacity-100 {
-    opacity: 1;
-}
-
-.playing-line {
-    height: 31px;
-    display: flex;
-    align-items: center;
-}
-
-.sort-handle {
-    cursor: move;
-}
-
-.ignore {
-    color: $color-grey !important;
-
-    &:hover+div {
-        opacity: .4;
-        text-decoration: line-through;
-    }
-
-    //disable effect hover on mobile devices
-    @media (hover: none) {
-
-        &:hover+div {
-            opacity: 1;
-            text-decoration: none;
-        }
-    }
-}
-
-hr {
-    border-top: 1px solid $color-grey;
 }

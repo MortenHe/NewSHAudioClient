@@ -27,7 +27,7 @@
 
             <!-- Song abspielen -->
             <button class="btn btn-sm mr-2"
-                    (click)="jumpToFromSearch(file.index)"><i class="fa fa-play"></i></button>
+                    (click)="jumpToFromSearch(file.index)"><i class="fa fa-play play-button opacity-50"></i></button>
 
             <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
             <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
@@ -39,6 +39,6 @@
 
         <!-- Trennlinie nach letztem Eintrag -->
         <hr *ngIf="last"
-            class="my-0 opacity-50">
+            class="my-0 opacity-30">
     </ng-container>
 </div>

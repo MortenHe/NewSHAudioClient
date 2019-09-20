@@ -1,7 +1,6 @@
 <!-- Sortierbare Playlist -->
 <div [sortablejs]="files"
-     (update)=sortDone($event)
-     (filter)=eventInsideSort($event)>
+     (update)=sortDone($event)>
 
     <!-- Ueber Files gehen und Ausschnitt der Liste anzeigen, nur Titel im oberen Bereich sind sortierbar-->
     <div *ngFor="let file of files | slice:0:20; index as index, last as last, first as first"
@@ -26,33 +25,32 @@
         <!-- Einfuegemarke und Songtitel -->
         <div class="ml-3 mr-3 d-flex no-gutters align-items-baseline">
 
-            <!-- Play-Symbol bei 1. Titel -->
-            <button *ngIf="index === 0"
-                    class="btn btn-sm pl-2 order-1">
-                <i class="fa fa-play"></i>
-            </button>
-
-            <!-- Song abspielen Button, aber nicht bei Index 0 und nicht wenn Titel gearde geladen wird -->
-            <button *ngIf="index !== 0 && index !== jumpPosition"
-                    class="btn btn-sm order-2"
+            <!-- Song abspielen Button, aber nicht wenn Titel gearde geladen wird -->
+            <button *ngIf="index !== jumpPosition"
+                    class="btn btn-sm order-1"
                     (click)="jumpTo(index)">
-                <i class="fa fa-play play-button opacity-50"></i>
+                <i class="fa fa-play"
+                   [ngClass]="{
+                       'opacity-50': index !== 0,
+                       'active-track': index === 0}"></i>
             </button>
 
             <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
-            <i class="fa fa-spinner fa-spin"
-               *ngIf="index === jumpPosition"></i>
+            <div *ngIf="index === jumpPosition"
+                 class="spinner-block">
+                <i class="fa fa-spinner fa-spin"></i>
+            </div>
 
             <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
             <!-- CSS Trick mit flex-order, damit durchstreichen per CSS funktioniert und Button trotzdem hinten steht -->
             <button *ngIf="index !== 0"
-                    class="btn btn-sm ignore opacity-50 order-4"
+                    class="btn btn-sm ignore opacity-50 order-3"
                     (click)="moveTitleToEnd(index)">
                 <i class="fa fa-minus"></i>
             </button>
 
             <!-- Titelinfo, aktuellen Song fett darstellen, im oberen Bereich ist Liste sortierbar -->
-            <div class="ml-2 order-3 col"
+            <div class="ml-2 order-2 col"
                  [ngClass]="{
                         'font-weight-bold': index === 0,
                         'sort-handle': draggable(index),

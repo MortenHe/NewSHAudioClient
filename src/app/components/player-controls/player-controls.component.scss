@@ -1,0 +1,8 @@
+@import "~src/scss/variables.scss";
+
+.fa-fast-backward,
+.fa-fast-forward,
+.fa-play,
+.fa-pause {
+    color: $color-controls;
+}

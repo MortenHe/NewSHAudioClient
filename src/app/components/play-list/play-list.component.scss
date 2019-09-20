@@ -1,0 +1,56 @@
+@import "~src/scss/variables.scss";
+
+.border-radius-bottom {
+    border-bottom-left-radius: 5px;
+    border-bottom-right-radius: 5px;
+}
+
+.active-track {
+    color: $color-controls;
+}
+
+.fa-spinner {
+    color: $color-controls;
+}
+
+.insertIndex {
+    height: 31px;
+    color: $color-controls;
+}
+
+.hoverTitle {
+    opacity: .6;
+}
+
+.playing-line {
+    height: 31px;
+    display: flex;
+    align-items: center;
+}
+
+.sort-handle {
+    cursor: move;
+}
+
+.spinner-block {
+    width: 29px;
+    text-align: center;
+}
+
+.ignore {
+    color: $color-grey !important;
+
+    &:hover+div {
+        opacity: .4;
+        text-decoration: line-through;
+    }
+
+    //disable effect hover on mobile devices
+    @media (hover: none) {
+
+        &:hover+div {
+            opacity: 1;
+            text-decoration: none;
+        }
+    }
+}

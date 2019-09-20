@@ -32,7 +32,7 @@ export class SearchFieldComponent implements OnInit {
     //Files abonnieren
     this.bs.getFiles().subscribe(files => {
       this.files = files;
-    })
+    });
 
     //Wenn im Suchfeld gesucht wird, Trefferliste filtern anhand des Suchterms
     this.titleSearch.valueChanges.subscribe(term => {

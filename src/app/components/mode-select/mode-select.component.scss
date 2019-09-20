@@ -1,0 +1,6 @@
+@import "~src/scss/variables.scss";
+
+.active-audio-mode span {
+    font-weight: bold;
+    border-bottom: 2px solid $color-grey;
+}

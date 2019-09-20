@@ -1,6 +1,8 @@
+HIGH
+
 MEDIUM
-- CSS in Komponenten aufteilen
-- Breite Spinner bei Trefferliste
+- playlist: border-bottom radius
+- font-awesome 5
 - Farben über Zeilen definieren (1. Zeile graue Schrift, 2. Zeile rota Schrift)
 - Ripple bei Enqeue / Remove (setTimeout?) vs. Spinner
 - config pw vs. marlen

@@ -25,5 +25,4 @@ export class HighlightDirective {
     let instance = new Mark(this.el.nativeElement);
     instance.mark(this.highlight);
   }
-
 }

@@ -5,11 +5,11 @@
     margin-bottom: 15px;
     margin-left: 15px;
     margin-right: 15px;
+    border-radius: 5px;
+    overflow: hidden;
 }
 
 .header {
-    border-top-right-radius: 5px;
-    border-top-left-radius: 5px;
     background: $color-controls;
     color: $color-white;
 }

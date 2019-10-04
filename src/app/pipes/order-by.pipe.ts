@@ -17,7 +17,7 @@ export class OrderByPipe implements PipeTransform {
     items.sort((a, b) => {
 
       //normale Sortierung nach Namensfeld (nur aufsteigend moeglich)
-      return a.fileName > b.fileName ? 1 : -1;
+      return a.fileName.localeCompare(b.fileName);
     });
 
     //sortiertes Array zurueckgeben

@@ -1,36 +1,32 @@
 <!-- Wrap fuer Elemente, waehrend App laueft (Main, Shutdown) -->
 <div *ngIf="!shutdown"
-     class="col no-gutters p-0 d-flex app-container">
+     class="col p-0 app-container shadow">
 
-    <!-- App-Container -->
-    <div class="app-content flex-grow-1 shadow">
+    <!-- 1. Zeile: Mode-Auswahl und Pi-Controls -->
+    <div class="row no-gutters header py-1 px-3 align-items-center">
 
-        <!-- 1. Zeile: Mode-Auswahl und Pi-Controls -->
-        <div class="row no-gutters header py-1 px-3 align-items-center">
+        <!-- Modusauswahl (sh, mh, kids) -->
+        <mode-select class="col heading"></mode-select>
 
-            <!-- Modusauswahl (sh, mh, kids) -->
-            <mode-select class="col heading"></mode-select>
-
-            <!-- Pi-Control (Connection und Shutdown) -->
-            <pi-controls></pi-controls>
-        </div>
-
-        <!-- 2. Zeile: Player-Controls und Lautstaerke -->
-        <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
-
-            <!-- Player-Controls: prev, pause, next -->
-            <player-controls class="col-6 control-content row no-gutters"></player-controls>
-
-            <!-- Lautstaerke -->
-            <volume-controls class="col row no-gutters justify-content-end"></volume-controls>
-        </div>
-
-        <!-- 3. Zeile: Suchfeld und Trefferliste -->
-        <search-field class="pt-3 px-3 pb-3 bg-white d-flex flex-column"></search-field>
-
-        <!-- 4. Zeile Playlist und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
-        <play-list></play-list>
+        <!-- Pi-Control (Connection und Shutdown) -->
+        <pi-controls></pi-controls>
     </div>
+
+    <!-- 2. Zeile: Player-Controls und Lautstaerke -->
+    <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
+
+        <!-- Player-Controls: prev, pause, next -->
+        <player-controls class="col-6 control-content row no-gutters"></player-controls>
+
+        <!-- Lautstaerke -->
+        <volume-controls class="col row no-gutters justify-content-end"></volume-controls>
+    </div>
+
+    <!-- 3. Zeile: Suchfeld und Trefferliste -->
+    <search-field class="pt-3 px-3 pb-3 bg-white d-flex flex-column"></search-field>
+
+    <!-- 4. Zeile Playlist und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
+    <play-list></play-list>
 </div>
 
 <!-- Block anzeigen, wenn Pi heruntergefahren wurde -->

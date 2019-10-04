@@ -1,13 +1,13 @@
 HIGH
 
 MEDIUM
-- playlist: border-bottom radius
 - font-awesome 5
-- Farben über Zeilen definieren (1. Zeile graue Schrift, 2. Zeile rota Schrift)
 - Ripple bei Enqeue / Remove (setTimeout?) vs. Spinner
 - config pw vs. marlen
 
 LOW
+- d-flex über :host statt in app.html
 - Trackby für Trefferliste
 - Nur Reihenfolge der Tracks von Server erhalten, Anzeige der Titel über Array
 - let vs. const
+- Farben über Zeilen definieren (1. Zeile graue Schrift, 2. Zeile rota Schrift)

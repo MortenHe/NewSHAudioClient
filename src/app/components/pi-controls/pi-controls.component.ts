@@ -11,23 +11,9 @@ export class PiControlsComponent implements OnInit {
   //clicks auf shutdown Button zaehlen
   clicks = 0;
 
-  //Zustand ob Verbindung zu WSS existiert
-  connected: boolean;
-
   constructor(private bs: BackendService) { }
 
-  ngOnInit() {
-
-    //Zustand abbonieren, ob Verbindung zu WSS besteht
-    this.bs.getConnected().subscribe(connected => {
-      this.connected = connected
-    });
-  }
-
-  //WSS-Server per PHP Aufruf starten
-  activateApp() {
-    this.bs.activateApp().subscribe();
-  }
+  ngOnInit() { }
 
   //Pi per Service herunterfahren
   shutdownPi() {
@@ -45,5 +31,4 @@ export class PiControlsComponent implements OnInit {
       }, 2000);
     }
   }
-
 }

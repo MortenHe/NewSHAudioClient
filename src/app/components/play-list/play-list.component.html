@@ -14,31 +14,37 @@
                 }">
 
         <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
-        <div class="ml-3 pl-2 d-flex insertIndex align-items-center"
+        <div class="ml-3 px-1 d-flex insertIndex align-items-center"
              *ngIf="index === insertIndex">
-            <i class="fa fa-arrow-right"></i>
+            <fa-icon icon="share"
+                     fixedWidth="true"
+                     class="color-controls"></fa-icon>
 
             <!-- Info welcher Titel hier eingefuegt wird -->
             <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
         </div>
 
         <!-- Einfuegemarke und Songtitel -->
-        <div class="ml-3 mr-3 d-flex no-gutters align-items-baseline">
+        <div class="ml-3 mr-3 d-flex no-gutters align-items-center">
 
             <!-- Song abspielen Button, aber nicht wenn Titel gearde geladen wird -->
             <button *ngIf="index !== jumpPosition"
-                    class="btn btn-sm order-1"
+                    class="btn btn-sm order-1 px-1"
                     (click)="jumpTo(index)">
-                <i class="fa fa-play"
-                   [ngClass]="{
+                <fa-icon icon="play"
+                         fixedWidth="true"
+                         [hover-class]="'opacity-100'"
+                         [ngClass]="{
                        'opacity-50': index !== 0,
-                       'active-track': index === 0}"></i>
+                       'active-track': index === 0}"></fa-icon>
             </button>
 
             <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
             <div *ngIf="index === jumpPosition"
                  class="spinner-block">
-                <i class="fa fa-spinner fa-spin"></i>
+                <fa-icon icon="spinner"
+                         spin="true"
+                         fixedWidth="true"></fa-icon>
             </div>
 
             <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
@@ -46,7 +52,8 @@
             <button *ngIf="index !== 0"
                     class="btn btn-sm ignore opacity-50 order-3"
                     (click)="moveTitleToEnd(index)">
-                <i class="fa fa-minus"></i>
+                <fa-icon icon="minus"
+                         fixedWidth="true"></fa-icon>
             </button>
 
             <!-- Titelinfo, aktuellen Song fett darstellen, im oberen Bereich ist Liste sortierbar -->

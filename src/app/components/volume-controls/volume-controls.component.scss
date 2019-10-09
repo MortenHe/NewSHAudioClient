@@ -1,7 +1,6 @@
 @import "~src/scss/variables.scss";
 
-.fa-volume-up,
-.fa-volume-down {
-    font-size: 23px !important;
+fa-icon {
+    font-size: 21px;
     color: $color-controls;
 }

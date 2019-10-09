@@ -3,6 +3,12 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 
+//Font Awesome 5
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+
+
 import { AppComponent } from './app.component';
 import { FilterListPipe } from './pipes/filter-list.pipe';
 import { BackendService } from './services/backend.service';
@@ -21,6 +27,8 @@ import { ModeSelectComponent } from './components/mode-select/mode-select.compon
 import { PiControlsComponent } from './components/pi-controls/pi-controls.component';
 import { PlayListComponent } from './components/play-list/play-list.component';
 import { FileService } from './service/file.service';
+import { ConnectionComponent } from './components/connection/connection.component';
+import { HoverClassDirective } from './directives/hover-class.directive';
 
 @NgModule({
   declarations: [
@@ -34,12 +42,15 @@ import { FileService } from './service/file.service';
     SearchFieldComponent,
     ModeSelectComponent,
     PiControlsComponent,
-    PlayListComponent
+    PlayListComponent,
+    ConnectionComponent,
+    HoverClassDirective
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     ReactiveFormsModule,
+    FontAwesomeModule,
     SortablejsModule.forRoot({
       animation: 350,
       draggable: '.drag',
@@ -54,4 +65,8 @@ import { FileService } from './service/file.service';
   ],
   bootstrap: [AppComponent]
 })
-export class AppModule { }
+export class AppModule {
+  constructor(library: FaIconLibrary) {
+    library.addIconPacks(fas, far);
+  }
+}

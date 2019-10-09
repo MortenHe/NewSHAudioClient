@@ -4,7 +4,8 @@
        for="searchField">
 
     <!-- Such-Symbol -->
-    <i class="fa fa-search ml-2"></i>
+    <fa-icon icon="search"
+             class="ml-2 opacity-70"></fa-icon>
 
     <!-- Suchefeld -->
     <input autofocus
@@ -26,8 +27,12 @@
         <div class="d-flex pb-2 align-items-baseline bg-white">
 
             <!-- Song abspielen -->
-            <button class="btn btn-sm mr-2"
-                    (click)="jumpToFromSearch(file.index)"><i class="fa fa-play play-button opacity-50"></i></button>
+            <button class="btn btn-sm mr-2 opacity-50 px-1"
+                    (click)="jumpToFromSearch(file.index)"
+                    [hover-class]="'opacity-100'">
+                <fa-icon icon="play"
+                         fixedWidth="true"></fa-icon>
+            </button>
 
             <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
             <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"

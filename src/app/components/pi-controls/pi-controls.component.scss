@@ -1,22 +1,10 @@
 @import "~src/scss/variables.scss";
 
-.connection {
-    color: $color-grey;
-    width: 40px;
-    height: 40px;
-    font-size: 21px;
-    text-align: center;
-    cursor: pointer;
-}
-
-.unconnected {
-    opacity: .3;
-}
-
 .shutdown {
     width: 40px;
     height: 40px;
     border-radius: 40px;
+    color: $color-grey;
 }
 
 .active {

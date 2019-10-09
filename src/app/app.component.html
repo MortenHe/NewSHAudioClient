@@ -2,13 +2,16 @@
 <div *ngIf="!shutdown"
      class="col p-0 app-container shadow">
 
-    <!-- 1. Zeile: Mode-Auswahl und Pi-Controls -->
+    <!-- 1. Zeile: Mode-Auswahl, Connection, Shutdown -->
     <div class="row no-gutters header py-1 px-3 align-items-center">
 
         <!-- Modusauswahl (sh, mh, kids) -->
         <mode-select class="col heading"></mode-select>
 
-        <!-- Pi-Control (Connection und Shutdown) -->
+        <!-- Connection -->
+        <connection></connection>
+
+        <!-- Shutdown -->
         <pi-controls></pi-controls>
     </div>
 

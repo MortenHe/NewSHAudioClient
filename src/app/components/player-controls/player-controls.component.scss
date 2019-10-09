@@ -1,8 +1,6 @@
 @import "~src/scss/variables.scss";
 
-.fa-fast-backward,
-.fa-fast-forward,
-.fa-play,
-.fa-pause {
+fa-icon {
     color: $color-controls;
+    font-size: 19px;
 }

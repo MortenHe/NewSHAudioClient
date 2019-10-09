@@ -30,7 +30,7 @@ export class PlayListComponent implements OnInit {
       this.files = files;
 
       //Jump Position zuruecksetzen, wenn neue Titelliste vorliegt
-      this.jumpPosition = -1
+      this.jumpPosition = -1;
     });
 
     //insertIndex abonnieren

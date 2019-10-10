@@ -1,34 +1,19 @@
 @import "~src/scss/variables.scss";
 
-fa-icon {
-    color: rgba($color-grey, .7);
-}
-
-.active-track {
-    color: $color-controls;
-}
-
-.fa-spinner {
-    color: $color-controls;
-}
-
-.insertIndex {
-    height: 31px;
-    color: $color-controls;
-}
-
-.hoverTitle {
-    opacity: .6;
-}
-
-.playing-line {
-    height: 31px;
-    display: flex;
-    align-items: center;
+:host {
+    display: block;
 }
 
 .sort-handle {
     cursor: move;
+}
+
+fa-icon {
+    color: rgba($color-grey, .7);
+}
+
+.insertIndex {
+    height: 31px;
 }
 
 .spinner-block {
@@ -37,8 +22,6 @@ fa-icon {
 }
 
 .ignore {
-    color: $color-grey !important;
-
     &:hover+div {
         opacity: .4;
         text-decoration: line-through;

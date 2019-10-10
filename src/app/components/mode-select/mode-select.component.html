@@ -3,5 +3,6 @@
     <button *ngIf="mode.active"
             class="btn"
             [class.active-audio-mode]="audioMode === mode.id"
-            (click)="setAudioMode(mode.id)"><span>{{mode.label}}</span></button>
+            (click)="setAudioMode(mode.id)"><span>{{mode.label}}</span>
+    </button>
 </ng-container>

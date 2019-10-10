@@ -2,26 +2,24 @@
 <div [sortablejs]="files"
      (update)=sortDone($event)>
 
-    <!-- Ueber Files gehen und Ausschnitt der Liste anzeigen, nur Titel im oberen Bereich sind sortierbar-->
+    <!-- Ueber Files gehen und Ausschnitt der Liste anzeigen, nur Titel im oberen Bereich sind sortierbar -->
     <div *ngFor="let file of files | slice:0:20; index as index, last as last, first as first"
          class="bg-white"
          [ngClass]="{
-                 'playing-line': index === 0,
                  'drag': draggable(index),
-                 'pt-0': first,
                  'pt-2': !first && index !== insertIndex,
                  'pb-2': last
                 }">
 
         <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
-        <div class="ml-3 px-1 d-flex insertIndex align-items-center"
+        <div class="ml-3 d-flex align-items-center color-controls insertIndex"
              *ngIf="index === insertIndex">
             <fa-icon icon="share"
                      fixedWidth="true"
-                     class="color-controls"></fa-icon>
+                     class="px-1 color-controls"></fa-icon>
 
-            <!-- Info welcher Titel hier eingefuegt wird -->
-            <div class="ml-3 hoverTitle">{{hoverTitle | fileName}}</div>
+            <!-- Vorschau, welcher Titel hier eingefuegt wird -->
+            <div class="ml-2 opacity-80">{{hoverTitle | fileName}}</div>
         </div>
 
         <!-- Einfuegemarke und Songtitel -->
@@ -36,7 +34,7 @@
                          [hover-class]="'opacity-100'"
                          [ngClass]="{
                        'opacity-50': index !== 0,
-                       'active-track': index === 0}"></fa-icon>
+                       'color-controls': index === 0}"></fa-icon>
             </button>
 
             <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
@@ -44,13 +42,15 @@
                  class="spinner-block">
                 <fa-icon icon="spinner"
                          spin="true"
-                         fixedWidth="true"></fa-icon>
+                         fixedWidth="true"
+                         class="color-controls"></fa-icon>
             </div>
 
             <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
             <!-- CSS Trick mit flex-order, damit durchstreichen per CSS funktioniert und Button trotzdem hinten steht -->
             <button *ngIf="index !== 0"
-                    class="btn btn-sm ignore opacity-50 order-3"
+                    class="btn btn-sm opacity-50 order-3 ignore"
+                    [hover-class]="'opacity-100'"
                     (click)="moveTitleToEnd(index)">
                 <fa-icon icon="minus"
                          fixedWidth="true"></fa-icon>

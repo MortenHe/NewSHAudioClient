@@ -65,16 +65,15 @@ export class BackendService {
           //App ist mit WSS verbunden
           this.connected$.next(true);
 
-          //Wenn es nicht nur ein Ping Message ist (die ggf. Verbindung wieder herstellt)
+          //Wenn es nicht nur ein Ping Message ist (die ggf. Verbindung wieder herstellt) -> Nachricht an WSS schicken
           if (data["type"] !== "ping") {
-
-            //Nachricht an WSS schicken
             socket.send(JSON.stringify(data));
           }
         }
 
         //keine Verbindung zu WSS
         else {
+
           //App ist nicht mit WSS verbunden
           this.connected$.next(false);
           //console.log("ready state ist " + socket.readyState)
@@ -88,7 +87,7 @@ export class BackendService {
     //WebSocket anlegen
     this.socket = Subject.create(observer, observable);
 
-    //auf Nachrichten vom SERVER reagieren
+    //auf Nachrichten === VOM SERVER === reagieren
     this.socket.subscribe(message => {
 
       //console.log((JSON.parse(message.data.toString())));
@@ -100,6 +99,7 @@ export class BackendService {
         case "audioMode":
           this.audioMode$.next(value);
           break;
+
         case "files":
           this.files$.next(value);
           break;
@@ -123,7 +123,7 @@ export class BackendService {
     });
   }
 
-  //Nachricht an WSS schicken
+  //Nachricht === AN SERVER === schicken
   sendMessage(messageObj) {
     //console.lconsole.log(messageObj);
     this.socket.next(messageObj);
@@ -149,17 +149,15 @@ export class BackendService {
     return this.paused$;
   }
 
-  //Shutdown Zustand liefern
   getShutdown() {
     return this.shutdown$;
   }
 
-  //Verbindungszustand mit WSS liefern
   getConnected() {
     return this.connected$;
   }
 
-  //App aktivieren = WSS starten
+  //App per PHP Aufruf aktivieren = WSS starten
   activateApp() {
     return this._http.get(this.serverUrl + "/php/activateApp.php?mode=sh");
   }

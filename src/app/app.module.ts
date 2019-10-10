@@ -8,6 +8,8 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
+//Sortable JS
+import { SortablejsModule } from 'ngx-sortablejs';
 
 import { AppComponent } from './app.component';
 import { FilterListPipe } from './pipes/filter-list.pipe';
@@ -15,11 +17,6 @@ import { BackendService } from './services/backend.service';
 import { FileNamePipe } from './pipes/file-name.pipe';
 import { OrderByPipe } from './pipes/order-by.pipe';
 import { HighlightDirective } from './directives/highlight.directive';
-
-//Sortable JS
-import { SortablejsModule } from 'ngx-sortablejs';
-
-//eigene Komponenten
 import { PlayerControlsComponent } from './components/player-controls/player-controls.component';
 import { VolumeControlsComponent } from './components/volume-controls/volume-controls.component';
 import { SearchFieldComponent } from './components/search-field/search-field.component';

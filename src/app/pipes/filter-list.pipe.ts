@@ -10,10 +10,8 @@ export class FilterListPipe implements PipeTransform {
     //Suchstring trimmen
     let searchString = term.trim();
 
-    //Wenn kein Suchbegriff eingetragen ist
+    //Wenn kein Suchbegriff eingetragen ist -> keine Dateien ausgeben
     if (!searchString) {
-
-      //keine Dateien ausgeben
       return null;
     }
 
@@ -33,8 +31,6 @@ export class FilterListPipe implements PipeTransform {
           displaySongs.push({ fileName: songName, index: index });
         }
       });
-
-      //Liste der Songs zureuckgeben, die angezeigt werden sollen
       return displaySongs;
     }
   }
@@ -71,8 +67,6 @@ export class FilterListPipe implements PipeTransform {
         }
       }
     }
-
-    //Ergebnis zurueckliefern, ob Item angezeigt werden soll
     return containsSubstrings;
   }
 }

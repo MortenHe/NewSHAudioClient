@@ -1,12 +1,12 @@
 <!-- Wrap fuer Elemente, waehrend App laueft (Main, Shutdown) -->
 <div *ngIf="!shutdown"
-     class="col p-0 app-container shadow">
+     class="col p-0 shadow app-container">
 
     <!-- 1. Zeile: Mode-Auswahl, Connection, Shutdown -->
-    <div class="row no-gutters header py-1 px-3 align-items-center">
+    <div class="d-flex align-items-center py-1 px-3 bg-color-controls">
 
         <!-- Modusauswahl (sh, mh, kids) -->
-        <mode-select class="col heading"></mode-select>
+        <mode-select class="flex-grow-1"></mode-select>
 
         <!-- Connection -->
         <connection></connection>
@@ -16,17 +16,17 @@
     </div>
 
     <!-- 2. Zeile: Player-Controls und Lautstaerke -->
-    <div class="row no-gutters pt-1 pb-1 justify-content-center bg-rose px-3">
+    <div class="d-flex py-1 px-3 bg-rose">
 
         <!-- Player-Controls: prev, pause, next -->
-        <player-controls class="col-6 control-content row no-gutters"></player-controls>
+        <player-controls class="flex-grow-1"></player-controls>
 
         <!-- Lautstaerke -->
-        <volume-controls class="col row no-gutters justify-content-end"></volume-controls>
+        <volume-controls class="flex-grow-1"></volume-controls>
     </div>
 
     <!-- 3. Zeile: Suchfeld und Trefferliste -->
-    <search-field class="pt-3 px-3 pb-3 bg-white d-flex flex-column"></search-field>
+    <search-field class="py-3 px-3 bg-white"></search-field>
 
     <!-- 4. Zeile Playlist und Einfuegemarke ausgeben, dabei immer aktuellen Titel ganz oben anzeigen -->
     <play-list></play-list>
@@ -34,6 +34,6 @@
 
 <!-- Block anzeigen, wenn Pi heruntergefahren wurde -->
 <div *ngIf="shutdown"
-     class="container mr-0 ml-0 no-gutters p-3 text-center">
+     class="container p-3 text-center">
     Der Player wurde beendet.
 </div>

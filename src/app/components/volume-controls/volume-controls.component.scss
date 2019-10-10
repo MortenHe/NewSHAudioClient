@@ -1,5 +1,10 @@
 @import "~src/scss/variables.scss";
 
+:host {
+    display: flex;
+    justify-content: flex-end;
+}
+
 fa-icon {
     font-size: 21px;
     color: $color-controls;

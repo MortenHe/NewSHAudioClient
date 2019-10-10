@@ -1,5 +1,10 @@
 @import "~src/scss/variables.scss";
 
+:host {
+    min-width: 300px;
+    max-width: 600px;
+}
+
 .app-container {
     margin-top: 15px;
     margin-bottom: 15px;
@@ -7,18 +12,4 @@
     margin-right: 15px;
     border-radius: 5px;
     overflow: hidden;
-}
-
-.header {
-    background: $color-controls;
-    color: $color-white;
-}
-
-.heading {
-    font-weight: bold;
-    font-size: 18px;
-}
-
-.bg-rose {
-    background: $color-rose;
 }

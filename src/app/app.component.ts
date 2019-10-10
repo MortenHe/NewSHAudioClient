@@ -31,14 +31,4 @@ export class AppComponent {
       });
     }, 1500);
   }
-
-  //if (index >= this.insertIndex) {
-  //this.hoverTitle = this.files[index];
-  //}
 }
-
-  //HoverTitle zuruecksetzen
-  //resetHoverTitle() {
-    //this.hoverTitle = "";
-  //}
-

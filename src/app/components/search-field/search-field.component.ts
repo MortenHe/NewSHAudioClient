@@ -21,7 +21,7 @@ export class SearchFieldComponent implements OnInit {
   //Liste der gefilterten Files
   filteredFiles = [];
 
-  //Pipes in Comp. aufrufen
+  //Pipes in Component aufrufen
   filterListPipe = new FilterListPipe();
   fileNamePipe = new FileNamePipe();
 

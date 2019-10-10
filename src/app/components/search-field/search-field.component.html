@@ -1,6 +1,6 @@
 <!-- Suchfeld und Trefferliste -->
 <!-- Suchfeld: Label besteht aus Icon und Suchfeld -->
-<label class="search-field form-control d-flex no-gutters align-items-center p-1 m-0"
+<label class="form-control d-flex no-gutters align-items-center p-1 m-0"
        for="searchField">
 
     <!-- Such-Symbol -->
@@ -8,9 +8,7 @@
              class="ml-2 opacity-70"></fa-icon>
 
     <!-- Suchefeld -->
-    <input autofocus
-           id="searchField"
-           placeholder="Lied suchen"
+    <input placeholder="Lied suchen"
            [formControl]="titleSearch"
            class="col ml-2"
            type="search">
@@ -18,24 +16,24 @@
 
 <!-- Trefferliste der Suchanfrage -->
 <div *ngIf="filteredFiles.length"
-     class="bg-white mt-2">
+     class="mt-2">
 
     <!-- Dateien ausgeben, die dem Filterkriterium entsprechen -->
     <ng-container *ngFor="let file of filteredFiles | orderBy | slice:0:20; last as last">
 
         <!-- Song abspielen Button und Songtitel formattiert -->
-        <div class="d-flex pb-2 align-items-baseline bg-white">
+        <div class="d-flex align-items-baseline pb-2">
 
             <!-- Song abspielen -->
-            <button class="btn btn-sm mr-2 opacity-50 px-1"
-                    (click)="jumpToFromSearch(file.index)"
-                    [hover-class]="'opacity-100'">
+            <button class="btn btn-sm opacity-50 px-1"
+                    [hover-class]="'opacity-100'"
+                    (click)="jumpToFromSearch(file.index)">
                 <fa-icon icon="play"
                          fixedWidth="true"></fa-icon>
             </button>
 
             <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
-            <div class="title-to-highlight cursor-pointer flex-grow-1 jump-to"
+            <div class="ml-2 cursor-pointer flex-grow-1"
                  (mouseenter)="setHoverTitle(file.index)"
                  (mouseleave)="resetHoverTitle()"
                  (click)="enqueueSongFromSearch(file.index)"

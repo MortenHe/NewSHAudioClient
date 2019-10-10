@@ -9,11 +9,6 @@ body {
     overflow-y: scroll;
 }
 
-.app-width {
-    min-width: 300px;
-    max-width: 600px;
-}
-
 .cursor-pointer {
     cursor: pointer;
 }
@@ -134,4 +129,20 @@ button:focus {
 
 .color-controls {
     color: $color-controls !important;
+}
+
+.color-grey {
+    color: $color-grey;
+}
+
+.bg-color {
+    background: $color-bg;
+}
+
+.bg-rose {
+    background: $color-rose;
+}
+
+.bg-color-controls {
+    background: $color-controls;
 }

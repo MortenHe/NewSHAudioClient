@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/app/services/backend.service';
-import { FileService } from 'src/app/service/file.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'play-list',
@@ -19,7 +19,7 @@ export class PlayListComponent implements OnInit {
   jumpPosition: number = -1;
 
   //Titel, der gearde gehovert wird
-  hoverTitle = "";
+  hoverTitle = null;
 
   constructor(private bs: BackendService, private fs: FileService) { }
 
@@ -99,7 +99,7 @@ export class PlayListComponent implements OnInit {
 
   //Hover Titel zuruecksetzen
   resetHoverTitle() {
-    this.fs.setHoverTitle("");
+    this.fs.resetHoverTitle();
   }
 
   //Titel ans Ende der Playlist verschieben (nicht bei aktuellem Titel moeglich)

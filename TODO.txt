@@ -1,22 +1,14 @@
 HIGH
-- fileservice -> services verschieben
 
 MEDIUM
-- volume control Zeile wie 1. Zeile (links flex-grow rechts kein)
-- Ripple bei Enqeue / Remove (setTimeout?) vs. Spinner
-- config pw vs. marlen
-- hoverTitel mit null stat ""
-- hoverTitel per directive setzen
+- color-grey (z.B. connection icon) uber body setzen
 - searchfield und searchresult aufteilen
 - getFiles nur einmal aufrufen bei searchfield. Achtung bei Mode-Wechsel
 - aktuelles Volume nur aus Server laden (kein Startwert 50)
+- Ripple / Fade bei Enqeue / Remove (setTimeout?) vs. Spinner
+- config pw vs. marlen
 
 LOW
-- d-flex über :host statt in app.html
-- hover-class directive
 - Trackby für Trefferliste
 - Nur Reihenfolge der Tracks von Server erhalten, Anzeige der Titel über Array
-- let vs. const
-- Farben über Zeilen definieren (1. Zeile graue Schrift, 2. Zeile rota Schrift)
-- Gesamtprüfung der Komponenten
 - favicon mit besserer Auflösung und rund

@@ -7,7 +7,7 @@ import { BehaviorSubject } from 'rxjs';
 export class FileService {
 
   //HoverTitel als BehaviourSubject (fuer Anzeige welche Titel einfuegt wird)
-  private hoverTitle = new BehaviorSubject<string>("");
+  private hoverTitle = new BehaviorSubject<string>(null);
 
   //Position welche Titel gearde geladen wird (fuer Spinner in Anzeige)
   private jumpPosition = new BehaviorSubject<number>(-1);
@@ -20,6 +20,10 @@ export class FileService {
 
   setHoverTitle(hoverTitle) {
     this.hoverTitle.next(hoverTitle);
+  }
+
+  resetHoverTitle() {
+    this.hoverTitle.next(null);
   }
 
   getJumpPosition() {

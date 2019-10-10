@@ -18,7 +18,7 @@ async function main() {
     const base_href = "shp";
 
     //Pfad wo Webseiten-Dateien auf Server liegen sollen
-    let server_audio_path = "/var/www/html/" + base_href;
+    const server_audio_path = "/var/www/html/" + base_href;
 
     //Projekt bauen
     console.log("start build");

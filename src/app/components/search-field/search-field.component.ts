@@ -3,7 +3,7 @@ import { FormControl } from '@angular/forms';
 import { FilterListPipe } from 'src/app/pipes/filter-list.pipe';
 import { FileNamePipe } from 'src/app/pipes/file-name.pipe';
 import { BackendService } from 'src/app/services/backend.service';
-import { FileService } from 'src/app/service/file.service';
+import { FileService } from 'src/app/services/file.service';
 
 @Component({
   selector: 'search-field',
@@ -104,6 +104,6 @@ export class SearchFieldComponent implements OnInit {
 
   //Hover Titel zuruecksetzen
   resetHoverTitle() {
-    this.fs.setHoverTitle("");
+    this.fs.resetHoverTitle();
   }
 }

@@ -12,7 +12,7 @@ async function main() {
     //Welche Website (pw vs. marlen) wohin deployen (pw / marlen / vb)
     const appId = process.argv[2] || "pw";
     const targetMachine = process.argv[3] || "pw";
-    console.log("build and deploy sh player (" + appId + ") to server " + targetMachine);
+    console.log("build and deploy sh player (" + appId + ") to server " + targetMachine + ": " + connection[targetMachine].host);
 
     //Unter welchem Unterpfad wird die App auf dem Server laufen?
     const base_href = "shp";

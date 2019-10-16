@@ -2,6 +2,7 @@
 //node .\deployWebsiteToServer.js pw pw (= PW Webseite auf PW Pi laden)
 //node .\deployWebsiteToServer.js marlen vb (= Marlen Webseite auf VB laden)
 //node .\deployWebsiteToServer.js vb vb (= VB Webseite auf VB laden)
+//node .\deployWebsiteToServer.js laila laila (= Laila Webseite auf Lailas Player laden)
 
 //Async Methode fuer Await Aufrufe
 async function main() {

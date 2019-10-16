@@ -4,6 +4,16 @@ module.exports = {
             user: '',
             password: ''
         },
+        laila: {
+            host: '',
+            user: '',
+            password: ''
+        },
+        luis: {
+            host: '',
+            user: '',
+            password: ''
+        },
         vb: {
             host: '',
             user: '',

@@ -22,7 +22,7 @@ export class PlayerControlsComponent implements OnInit {
   }
 
   //vor oder zureuck schalten
-  changeItem(step) {
+  changeItem(step: number) {
     this.bs.sendMessage({ type: "change-item", value: step });
   }
 

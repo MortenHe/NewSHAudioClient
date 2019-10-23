@@ -24,6 +24,9 @@ export class BackendService {
   //Lautstaerke
   volume$: Subject<number> = new Subject<number>();
 
+  //Countdownzeit
+  countdownTime$: Subject<number> = new Subject<number>();
+
   //Index wo Datei eingereiht wird
   insertIndex$: Subject<number> = new Subject<number>();
 
@@ -108,6 +111,10 @@ export class BackendService {
           this.volume$.next(value);
           break;
 
+        case "countdownTime":
+          this.countdownTime$.next(value);
+          break;
+
         case "insertIndex":
           this.insertIndex$.next(value);
           break;
@@ -139,6 +146,10 @@ export class BackendService {
 
   getVolume() {
     return this.volume$;
+  }
+
+  getCountdownTime() {
+    return this.countdownTime$;
   }
 
   getInsertIndex() {

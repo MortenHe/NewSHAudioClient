@@ -26,6 +26,7 @@ import { PlayListComponent } from './components/play-list/play-list.component';
 import { FileService } from './services/file.service';
 import { ConnectionComponent } from './components/connection/connection.component';
 import { HoverClassDirective } from './directives/hover-class.directive';
+import { CountdownComponent } from './components/countdown/countdown.component';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { HoverClassDirective } from './directives/hover-class.directive';
     PiControlsComponent,
     PlayListComponent,
     ConnectionComponent,
-    HoverClassDirective
+    HoverClassDirective,
+    CountdownComponent
   ],
   imports: [
     BrowserModule,

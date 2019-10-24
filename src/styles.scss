@@ -127,6 +127,10 @@ button:focus {
     transition: 0s;
 }
 
+.hidden {
+    display: none !important;
+}
+
 .color-controls {
     color: $color-controls !important;
 }

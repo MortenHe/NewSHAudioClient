@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
-  serverUrl: 'http://192.168.0.148',
-  wssUrl: 'ws://192.168.0.148:9090',
+  serverUrl: 'http://192.168.0.238',
+  wssUrl: 'ws://192.168.0.238:9090',
   modes: [{
     id: 'sh',
     label: 'SH',

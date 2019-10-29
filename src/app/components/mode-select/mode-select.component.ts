@@ -26,10 +26,12 @@ export class ModeSelectComponent implements OnInit {
   }
 
   //Audiomodus setzen (sh, mh, kids)
-  setAudioMode(mode) {
+  setAudioMode(audioMode) {
     this.bs.sendMessage({
       type: "set-audio-mode",
-      value: mode
+      value: {
+        "audioMode": audioMode
+      }
     });
   }
 }

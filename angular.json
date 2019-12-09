@@ -63,6 +63,23 @@
                 }
               ]
             },
+            "luis": {
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.luis.ts"
+                }
+              ]
+            },
             "pw-test": {
               "fileReplacements": [
                 {
@@ -84,6 +101,9 @@
             },
             "laila": {
               "browserTarget": "NewWebsocketSHPlayer:build:laila"
+            },
+            "luis": {
+              "browserTarget": "NewWebsocketSHPlayer:build:luis"
             },
             "pw-test": {
               "browserTarget": "NewWebsocketSHPlayer:build:pw-test"

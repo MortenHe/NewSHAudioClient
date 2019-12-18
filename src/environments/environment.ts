@@ -15,8 +15,13 @@ export const environment = {
     active: true
   },
   {
-    id: 'kids',
-    label: 'Kids',
+    id: 'laila',
+    label: 'Laila',
+    active: true
+  },
+  {
+    id: 'luis',
+    label: 'Luis',
     active: true
   }]
 };

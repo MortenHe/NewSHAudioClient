@@ -1,4 +1,5 @@
 export const environment = {
+  envName: 'Steffis Musik Player',
   production: true,
   serverUrl: 'http://192.168.0.149',
   wssUrl: 'ws://192.168.0.149:9090',
@@ -13,13 +14,8 @@ export const environment = {
     active: true
   },
   {
-    id: 'laila',
-    label: 'Laila',
-    active: true
-  },
-  {
-    id: 'luis',
-    label: 'Luis',
+    id: 'kids',
+    label: 'Kids',
     active: true
   }]
 };

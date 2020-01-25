@@ -170,6 +170,6 @@ export class BackendService {
 
   //App per PHP Aufruf aktivieren = WSS starten
   activateApp() {
-    return this._http.get(this.serverUrl + "/php/activateApp.php?mode=sh");
+    return this._http.get(this.serverUrl + "/php/activateAudioApp.php?mode=sh");
   }
 }

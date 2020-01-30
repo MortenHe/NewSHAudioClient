@@ -14,7 +14,7 @@ export class FileNamePipe implements PipeTransform {
       //Datei kommt als kompletter Pfad: nur Dateiname ausgeben, auch Dateiendung .mp3 streichen
       let fileName = path.basename(songName, '.mp3');
       //let fileName = path.win32.basename(songName, '.mp3');
-      return fileName.replace(/(^\d+ - |.+ - .+ - | \(.*\))/, '');
+      return fileName.replace(/(^\d+ - |.+ - .+ - )/, '');
     }
   }
 }

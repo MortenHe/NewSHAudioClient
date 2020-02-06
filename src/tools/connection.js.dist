@@ -1,22 +1,22 @@
 module.exports = {
         pw: {
             host: '',
-            user: '',
+            user: 'root',
             password: ''
         },
         laila: {
             host: '',
-            user: '',
+            user: 'root',
             password: ''
         },
         luis: {
             host: '',
-            user: '',
+            user: 'root',
             password: ''
         },
         vb: {
             host: '',
-            user: '',
+            user: 'root',
             password: ''
         }
 };

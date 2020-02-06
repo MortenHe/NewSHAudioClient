@@ -1,8 +1,5 @@
 //Webseite bauen und auf Server laden
-//node .\deployWebsiteToServer.js pw pw (= PW Webseite auf PW Pi laden)
-//node .\deployWebsiteToServer.js marlen vb (= Marlen Webseite auf VB laden)
-//node .\deployWebsiteToServer.js vb vb (= VB Webseite auf VB laden)
-//node .\deployWebsiteToServer.js laila laila (= Laila Webseite auf Lailas Player laden)
+//node .\deployWebsiteToServer.js pw | marlen | vb | laila
 
 //Async Methode fuer Await Aufrufe
 async function main() {
@@ -10,22 +7,21 @@ async function main() {
     //Connection laden
     const connection = require("./connection.js");
 
-    //Welche Website (pw vs. marlen) wohin deployen (pw / marlen / vb)
-    const appId = process.argv[2] || "pw";
-    const targetMachine = process.argv[3] || "pw";
-    console.log("build and deploy sh player (" + appId + ") to server " + targetMachine + ": " + connection[targetMachine].host);
+    //Welche Website (pw / marlen / vb) wohin deployen (pw / marlen / vb)
+    const targetMachine = process.argv[2] || "pw";
+    console.log("build and deploy audio (" + targetMachine + ") to server " + targetMachine + ": " + connection[targetMachine].host);
 
     //Unter welchem Unterpfad wird die App auf dem Server laufen?
     const base_href = "shp";
 
     //Pfad wo Webseiten-Dateien auf Server liegen sollen
-    const server_audio_path = "/var/www/html/" + base_href;
+    let server_audio_path = "/var/www/html/" + base_href;
 
     //Projekt bauen
-    console.log("start build");
     const util = require('util');
     const exec = util.promisify(require('child_process').exec);
-    await exec("ng build -c=" + appId + " --base-href=/" + base_href + "/");
+    console.log("start build");
+    await exec("ng build -c=" + targetMachine + " --base-href=/" + base_href + "/");
     console.log("build done");
 
     //htaccess Schablone in dist Ordner kopieren und durch Pattern Ersetzung anpassen

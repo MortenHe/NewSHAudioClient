@@ -18,10 +18,9 @@ async function main() {
     let server_audio_path = "/var/www/html/" + base_href;
 
     //Projekt bauen
-    const util = require('util');
-    const exec = util.promisify(require('child_process').exec);
     console.log("start build");
-    await exec("ng build -c=" + targetMachine + " --base-href=/" + base_href + "/");
+    const execSync = require('child_process').execSync;
+    execSync("ng build -c=" + targetMachine + " --base-href=/" + base_href + "/", { stdio: 'inherit' });
     console.log("build done");
 
     //htaccess Schablone in dist Ordner kopieren und durch Pattern Ersetzung anpassen

@@ -4,6 +4,11 @@ module.exports = {
             user: 'root',
             password: ''
         },
+        sh: {
+            host: '',
+            user: 'root',
+            password: ''
+        },
         laila: {
             host: '',
             user: 'root',

@@ -1,7 +1,5 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import * as path from 'path';
-import * as slash from 'slash';
-import * as process from 'process';
 
 @Pipe({
   name: 'fileName'

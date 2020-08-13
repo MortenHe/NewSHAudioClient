@@ -1,20 +1,37 @@
-<!-- Sortierbare Playlist -->
-<div [sortablejs]="files"
-     (update)=sortDone($event)>
+<!-- Ab. 2 Titel sortierbare Playlist -->
+<div cdkDropList
+     class="sort-list"
+     (cdkDropListDropped)="drop($event)">
 
-    <!-- Ueber Files gehen und Ausschnitt der Liste anzeigen, nur Titel im oberen Bereich sind sortierbar -->
-    <div *ngFor="let file of files | slice:0:20; index as index, last as last, first as first"
-         class="bg-white"
+    <!-- 1. Titel (nicht sortierbar) -->
+    <div class="h5 mx-3 mb-3 pb-3 border-bottom d-flex no-gutters align-items-center">
+
+        <!-- Song abspielen Button -->
+        <button class="mb-0 px-1"
+                (click)="jumpTo(0)">
+            <fa-icon icon="play"
+                     fixedWidth="true"
+                     class="color-controls"></fa-icon>
+        </button>
+
+        <!-- Titelinfo fett -->
+        <div class="ml-2 font-weight-bold">
+            <span>{{files[0] | fileName}}</span>
+        </div>
+    </div>
+
+    <!-- Ueber Files gehen (ab. 2 Titel) und Ausschnitt der Liste anzeigen, Titel sind sortierbar -->
+    <div *ngFor="let file of files | slice:1:20 ; index as index, last as last, first as first"
+         class="sort-box bg-white"
          [ngClass]="{
-                 'drag': draggable(index),
-                 'pt-2': !first && index !== insertIndex,
+                 'pt-2': !first && (index + 1) !== insertIndex,
                  'pb-2': last
                 }">
 
         <!-- Einfuegemarke, wo der naechste neue Titel eingefuegt wird -->
         <div class="ml-3 d-flex align-items-center color-controls insertIndex"
-             *ngIf="index === insertIndex">
-            <fa-icon icon="share"
+             *ngIf="index + 1 === insertIndex">
+            <fa-icon icon="arrow-right"
                      fixedWidth="true"
                      class="px-1 color-controls"></fa-icon>
 
@@ -22,23 +39,29 @@
             <div class="ml-2 opacity-80">{{hoverTitle | fileName}}</div>
         </div>
 
-        <!-- Einfuegemarke und Songtitel -->
-        <div class="ml-3 mr-3 d-flex no-gutters align-items-center">
+        <!-- sortierbarer Songtitel -->
+        <div class="ml-3 mr-3 d-flex no-gutters align-items-center"
+             cdkDrag>
+
+            <!-- Sortier-Handle -->
+            <fa-icon class="cursor-move px-1 order-1"
+                     *ngIf="true"
+                     icon="bars"
+                     fixedWidth="true"
+                     cdkDragHandle></fa-icon>
 
             <!-- Song abspielen Button, aber nicht wenn Titel gearde geladen wird -->
-            <button *ngIf="index !== jumpPosition"
+            <button *ngIf="(index + 1) !== jumpPosition"
                     class="btn btn-sm order-1 px-1"
-                    (click)="jumpTo(index)">
+                    (click)="jumpTo(index + 1)">
                 <fa-icon icon="play"
                          fixedWidth="true"
                          [hover-class]="'opacity-100'"
-                         [ngClass]="{
-                       'opacity-50': index !== 0,
-                       'color-controls': index === 0}"></fa-icon>
+                         class="opacity-50"></fa-icon>
             </button>
 
             <!-- Spinner anzeigen, wenn zu diesem Titel gesprungen werden soll -->
-            <div *ngIf="index === jumpPosition"
+            <div *ngIf="(index + 1) === jumpPosition"
                  class="spinner-block">
                 <fa-icon icon="spinner"
                          spin="true"
@@ -46,25 +69,23 @@
                          class="color-controls"></fa-icon>
             </div>
 
-            <!-- Titel ignroerien (=nach ganz hinten schieben), aber nicht bei Index 0 -->
+            <!-- Titel ignroerien (=nach ganz hinten schieben) -->
             <!-- CSS Trick mit flex-order, damit durchstreichen per CSS funktioniert und Button trotzdem hinten steht -->
-            <button *ngIf="index !== 0"
-                    class="btn btn-sm opacity-50 order-3 ignore"
+            <button class="btn btn-sm opacity-50 order-3 ignore"
                     [hover-class]="'opacity-100'"
-                    (click)="moveTitleToEnd(index)">
+                    (click)="moveTitleToEnd(index + 1)">
                 <fa-icon icon="minus"
                          fixedWidth="true"></fa-icon>
             </button>
 
-            <!-- Titelinfo, aktuellen Song fett darstellen, im oberen Bereich ist Liste sortierbar -->
+            <!-- Titelinfo -->
             <div class="ml-2 order-2 col"
                  [ngClass]="{
-                        'font-weight-bold': index === 0,
-                        'sort-handle': draggable(index),
-                        'cursor-pointer': index >= insertIndex}"
-                 (mouseenter)="setHoverTitle(index)"
+                     'cursor-pointer': index + 1 >= insertIndex
+                    }"
+                 (mouseenter)="setHoverTitle(index + 1)"
                  (mouseleave)="resetHoverTitle()"
-                 (click)="enqueueSong(index)">
+                 (click)="enqueueSong(index + 1)">
 
                 <!-- Titelname -->
                 <span>{{file | fileName}}</span>

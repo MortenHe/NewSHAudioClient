@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { BackendService } from 'src/app/services/backend.service';
 import { FileService } from 'src/app/services/file.service';
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 
 @Component({
   selector: 'play-list',
@@ -62,17 +63,15 @@ export class PlayListComponent implements OnInit {
     window.scroll(0, 0);
   }
 
-  //ist Eintrag sortierbar? Nur im oberen Bereich, nicht 1. Titel, nur wenn mehrere Titel zum Umsortieren vorhanden
-  draggable(index) {
-    return (index > 0 && index < this.insertIndex && this.insertIndex > 2);
-  }
+  //Wenn Sortiervorgang abgeschlossen ist -> Model anpassen und Server ueber neue Sortierung informieren
+  drop(event: CdkDragDrop<string[]>) {
+    moveItemInArray(this.files, event.previousIndex + 1, event.currentIndex + 1);
 
-  //Wenn Sortiervorgang abgeschlossen ist, Server ueber neue Sortierung informieren
-  sortDone(event: any) {
+    //Info an Server
     this.bs.sendMessage({
       type: "sort-playlist", value: {
-        from: event.oldIndex,
-        to: event.newIndex
+        from: event.previousIndex + 1,
+        to: event.currentIndex + 1
       }
     });
   }

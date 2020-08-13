@@ -8,8 +8,8 @@ import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontaweso
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 
-//Sortable JS
-import { SortablejsModule } from 'ngx-sortablejs';
+//Sortierbare Mix-Liste
+import { DragDropModule } from '@angular/cdk/drag-drop';
 
 import { AppComponent } from './app.component';
 import { FilterListPipe } from './pipes/filter-list.pipe';
@@ -27,6 +27,7 @@ import { FileService } from './services/file.service';
 import { ConnectionComponent } from './components/connection/connection.component';
 import { HoverClassDirective } from './directives/hover-class.directive';
 import { CountdownComponent } from './components/countdown/countdown.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -50,13 +51,8 @@ import { CountdownComponent } from './components/countdown/countdown.component';
     HttpClientModule,
     ReactiveFormsModule,
     FontAwesomeModule,
-    SortablejsModule.forRoot({
-      animation: 350,
-      draggable: '.drag',
-      handle: '.sort-handle',
-      filter: ".ignore-sort",
-      chosenClass: "sortable-chosen"
-    }),
+    BrowserAnimationsModule,
+    DragDropModule
   ],
   providers: [
     BackendService,

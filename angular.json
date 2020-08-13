@@ -231,7 +231,7 @@
   "defaultProject": "NewWebsocketSHPlayer",
   "schematics": {
     "@schematics/angular:component": {
-      "styleext": "scss"
+      "style": "scss"
     }
   }
 }

@@ -43,16 +43,9 @@
         <div class="ml-3 mr-3 d-flex no-gutters align-items-center"
              cdkDrag>
 
-            <!-- Sortier-Handle -->
-            <fa-icon class="cursor-move px-1 order-1 opacity-50"
-                     *ngIf="true"
-                     icon="bars"
-                     fixedWidth="true"
-                     cdkDragHandle></fa-icon>
-
             <!-- Song abspielen Button, aber nicht wenn Titel gearde geladen wird -->
             <button *ngIf="(index + 1) !== jumpPosition"
-                    class="ml-1 btn btn-sm order-1 px-1"
+                    class="mr-1 btn btn-sm order-1 px-1"
                     (click)="jumpTo(index + 1)">
                 <fa-icon icon="play"
                          fixedWidth="true"
@@ -74,12 +67,12 @@
             <button class="btn btn-sm opacity-50 order-3 ignore"
                     [hover-class]="'opacity-100'"
                     (click)="moveTitleToEnd(index + 1)">
-                <fa-icon icon="minus"
+                <fa-icon icon="trash"
                          fixedWidth="true"></fa-icon>
             </button>
 
             <!-- Titelinfo -->
-            <div class="ml-1 order-2 col"
+            <div class="order-2 col"
                  [ngClass]="{
                      'cursor-pointer': index + 1 >= insertIndex
                     }"
@@ -90,6 +83,13 @@
                 <!-- Titelname -->
                 <span>{{file | fileName}}</span>
             </div>
+
+            <!-- Sortier-Handle -->
+            <fa-icon class="cursor-move px-1 order-4 opacity-50"
+                     *ngIf="true"
+                     icon="bars"
+                     fixedWidth="true"
+                     cdkDragHandle></fa-icon>
         </div>
     </div>
 </div>

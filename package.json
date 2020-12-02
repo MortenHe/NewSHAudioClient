@@ -26,16 +26,16 @@
     "@fortawesome/free-regular-svg-icons": "^5.15.1",
     "@fortawesome/free-solid-svg-icons": "^5.15.1",
     "@types/mark.js": "^8.11.5",
-    "bootstrap": "^4.5.2",
+    "bootstrap": "^4.5.3",
     "fs-extra": "^9.0.1",
     "path": "^0.12.7",
     "replace": "^1.2.0",
     "rxjs": "^6.6.3",
     "ssh2-promise": "^0.1.7",
-    "ssh2-sftp-client": "^5.3.1",
+    "ssh2-sftp-client": "^5.3.2",
     "tslib": "^2.0.0",
     "zip-a-folder": "0.0.12",
-    "zone.js": "^0.11.1"
+    "zone.js": "^0.11.3"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.1100.2",
@@ -44,7 +44,7 @@
     "@angular/language-service": "^11.0.2",
     "@types/jasmine": "~3.6.0",
     "@types/jasminewd2": "^2.0.8",
-    "@types/node": "^14.11.8",
+    "@types/node": "^14.14.10",
     "codelyzer": "^6.0.0",
     "core-js": "3.6.5",
     "jasmine-core": "~3.6.0",

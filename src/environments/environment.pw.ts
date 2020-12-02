@@ -17,5 +17,10 @@ export const environment = {
     id: 'kids',
     label: 'Kids',
     active: true
+  },
+  {
+    id: 'xmas',
+    label: 'X-Mas',
+    active: true
   }]
 };

@@ -1,8 +1,8 @@
 export const environment = {
-  envName: 'PW Musik Player',
-  production: false,
-  serverUrl: 'http://localhost:9090/php',
-  wssUrl: 'ws://localhost:9090',
+  envName: 'MH Musik Player',
+  production: true,
+  serverUrl: 'http://192.168.0.124/php',
+  wssUrl: 'ws://192.168.0.124:9090',
   modes: [{
     id: 'sh',
     label: 'SH',

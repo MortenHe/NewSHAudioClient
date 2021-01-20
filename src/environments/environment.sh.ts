@@ -19,6 +19,11 @@ export const environment = {
     active: true
   },
   {
+    id: 'new',
+    label: 'New',
+    active: true
+  },
+  {
     id: 'xmas',
     label: 'X-Mas',
     active: false

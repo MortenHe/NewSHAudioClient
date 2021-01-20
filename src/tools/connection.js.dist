@@ -1,4 +1,9 @@
 module.exports = {
+    mh: {
+        host: '',
+        user: 'root',
+        password: ''
+    },
     pw: {
         host: '',
         user: 'root',

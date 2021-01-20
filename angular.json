@@ -40,6 +40,28 @@
                 }
               ]
             },
+            "mh": {
+              "budgets": [
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "6kb"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "aot": true,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.mh.ts"
+                }
+              ]
+            },
             "pw": {
               "budgets": [
                 {
@@ -150,6 +172,9 @@
             "browserTarget": "NewWebsocketSHPlayer:build"
           },
           "configurations": {
+            "mh": {
+              "browserTarget": "NewWebsocketSHPlayer:build:mh"
+            },
             "pw": {
               "browserTarget": "NewWebsocketSHPlayer:build:pw"
             },
@@ -232,5 +257,8 @@
     "@schematics/angular:component": {
       "style": "scss"
     }
+  },
+  "cli": {
+    "analytics": false
   }
 }

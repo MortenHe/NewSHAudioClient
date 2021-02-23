@@ -9,8 +9,8 @@ import { BackendService } from 'src/app/services/backend.service';
 })
 export class ModeSelectComponent implements OnInit {
 
-  //AudioModes laden aus config
-  modes = environment.modes;
+  //Liste des AudioModes
+  audioModes: any[] = [];
 
   //Aktueller Audiomodus (sh, mh, kids)
   audioMode = "";
@@ -19,7 +19,12 @@ export class ModeSelectComponent implements OnInit {
 
   ngOnInit() {
 
-    //audioMode abonnieren
+    //Liste der audioModes Abo
+    this.bs.getAudioModes().subscribe((audioModes: any[]) => {
+      this.audioModes = audioModes;
+    });
+
+    //aktuellen audioMode abonnieren
     this.bs.getAudioMode().subscribe(audioMode => {
       this.audioMode = audioMode;
     });

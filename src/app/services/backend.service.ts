@@ -15,7 +15,10 @@ export class BackendService {
   //WebSocket
   socket: Subject<any>;
 
-  //Audiomodus (sh, mh, kids)
+  //Liste des Audiomodus (sh, mh, kids)
+  audioModes$: Subject<any[]> = new Subject<any[]>();
+
+  //Ausgewaehlter Audiomodus (sh, mh, kids)
   audioMode$: Subject<string> = new Subject<string>();
 
   //Liste der Dateien
@@ -99,6 +102,10 @@ export class BackendService {
 
       //Switch anhand Message-Types
       switch (obj.type) {
+        case "audioModes":
+          this.audioModes$.next(value);
+          break;
+
         case "audioMode":
           this.audioMode$.next(value);
           break;
@@ -134,6 +141,10 @@ export class BackendService {
   sendMessage(messageObj) {
     //console.lconsole.log(messageObj);
     this.socket.next(messageObj);
+  }
+
+  getAudioModes() {
+    return this.audioModes$;
   }
 
   getAudioMode() {

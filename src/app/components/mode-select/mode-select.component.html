@@ -1,5 +1,5 @@
 <!-- Mode-Select (sh, mh, kids) -->
-<ng-container *ngFor="let mode of modes">
+<ng-container *ngFor="let mode of audioModes">
     <button *ngIf="mode.active"
             class="btn"
             [class.active-audio-mode]="audioMode === mode.id"

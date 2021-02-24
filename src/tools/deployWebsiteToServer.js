@@ -4,12 +4,11 @@
 //Async Methode fuer Await Aufrufe
 async function main() {
 
-    //Connection laden
-    const connection = require("./connection.js");
-
     //Welche Website (pw / marlen / vb) wohin deployen (pw / marlen / vb)
+    const fs = require('fs-extra');
     const targetMachine = process.argv[2] || "pw";
-    console.log("build and deploy audio (" + targetMachine + ") to server " + targetMachine + ": " + connection[targetMachine].host);
+    const connection = fs.readJSONSync(__dirname + "/../../../AudioClient/src/tools/config.json").connections[targetMachine];
+    console.log("build and deploy sh audio (" + targetMachine + ") to server " + targetMachine + ": " + connection.host);
 
     //Unter welchem Unterpfad wird die App auf dem Server laufen?
     const base_href = "shp";
@@ -24,7 +23,6 @@ async function main() {
     console.log("build done");
 
     //htaccess Schablone in dist Ordner kopieren und durch Pattern Ersetzung anpassen
-    const fs = require('fs-extra');
     const replace = require("replace");
     console.log("copy htacces");
     await fs.copy('.htaccess', '../../dist/htaccess');
@@ -46,19 +44,19 @@ async function main() {
     //SSH-Verbindung um Shell-Befehle auszufuehren (unzip, chmod,...)
     const SSH2Promise = require('ssh2-promise');
     const ssh = new SSH2Promise({
-        host: connection[targetMachine].host,
-        username: connection[targetMachine].user,
-        password: connection[targetMachine].password
+        host: connection.host,
+        username: connection.user,
+        password: connection.password
     });
 
     //sftp-Verbindung um Webseiten-Dateien hochzuladen
     const Client = require('ssh2-sftp-client');
     const sftp = new Client();
     await sftp.connect({
-        host: connection[targetMachine].host,
+        host: connection.host,
         port: '22',
-        username: connection[targetMachine].user,
-        password: connection[targetMachine].password
+        username: connection.user,
+        password: connection.password
     });
 
     //gibt es schon einen Ordner (shp)

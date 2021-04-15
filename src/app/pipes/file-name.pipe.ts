@@ -10,7 +10,7 @@ export class FileNamePipe implements PipeTransform {
     if (songName) {
 
       //Datei kommt als kompletter Pfad: nur Dateiname ausgeben, auch Dateiendung .mp3 streichen
-      const fileName = path.basename(songName, '.mp3');
+      const fileName = path.basename(songName, path.extname(songName));
       return fileName.replace(/(^\d+ - |.+ - .+ - )/, '');
     }
   }

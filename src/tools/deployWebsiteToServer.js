@@ -1,14 +1,23 @@
 //Webseite bauen und auf Server laden
 //node .\deployWebsiteToServer.js pw | marlen | vb | laila
 
+//ggf. Projekt nur bauen oder nur hochladen (wenn es vorher schon gebaut wurde)
+const buildModes = [
+    "build & upload",
+    "build only",
+    "upload only"
+];
+
 //Async Methode fuer Await Aufrufe
 async function main() {
 
     //Welche Website (pw / marlen / vb) wohin deployen (pw / marlen / vb)
     const fs = require('fs-extra');
-    const targetMachine = process.argv[2] || "pw";
+    const targetMachine = process.argv[2];
+    const buildMode = parseInt(process.argv[3]) || 0;
     const connection = fs.readJSONSync(__dirname + "/../../../AudioClient/src/tools/config.json").connections[targetMachine];
     console.log("build and deploy sh audio (" + targetMachine + ") to server " + targetMachine + ": " + connection.host);
+    console.log("build mode: " + buildModes[buildMode]);
 
     //Unter welchem Unterpfad wird die App auf dem Server laufen?
     const base_href = "shp";
@@ -17,10 +26,21 @@ async function main() {
     let server_audio_path = "/var/www/html/" + base_href;
 
     //Projekt bauen
-    console.log("start build");
-    const execSync = require('child_process').execSync;
-    execSync("ng build -c=" + targetMachine + " --base-href=/" + base_href + "/", { stdio: 'inherit' });
-    console.log("build done");
+    if (buildMode === 0 || buildMode === 1) {
+        console.log("start build");
+        const execSync = require('child_process').execSync;
+        execSync("ng build -c=" + targetMachine + " --base-href=/" + base_href + "/", { stdio: 'inherit' });
+        console.log("build done");
+    }
+    else {
+        console.log("no build");
+    }
+
+    //Wenn es keinen Upload gibt. Hier abbrechen
+    if (buildMode !== 0 && buildMode !== 2) {
+        console.log("no upload");
+        process.exit();
+    }
 
     //htaccess Schablone in dist Ordner kopieren und durch Pattern Ersetzung anpassen
     const replace = require("replace");

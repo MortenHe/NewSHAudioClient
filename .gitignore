@@ -38,5 +38,4 @@ testem.log
 .DS_Store
 Thumbs.db
 /myDist.zip
-/src/tools/connection.js
 src/environments/environment.ts

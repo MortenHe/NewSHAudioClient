@@ -1,6 +1,5 @@
 import { Component } from '@angular/core';
 import { BackendService } from './services/backend.service';
-import { environment } from 'src/environments/environment';
 import { Title } from '@angular/platform-browser';
 
 @Component({
@@ -10,9 +9,6 @@ import { Title } from '@angular/platform-browser';
 })
 
 export class AppComponent {
-
-  //App-Name aus Config holen
-  envName = environment.envName;
 
   //Ist die App beendet worden?
   shutdown = false;
@@ -24,7 +20,8 @@ export class AppComponent {
   ngOnInit() {
 
     //HTML-Page-Title setzen
-    this.titleService.setTitle(this.envName);
+    //TODO ueber server.js setzen
+    this.titleService.setTitle("SH Audio");
 
     //shutdown Zustand abbonieren
     this.bs.getShutdown().subscribe(shutdown => {
@@ -37,6 +34,6 @@ export class AppComponent {
         type: "ping",
         value: ""
       });
-    }, 1500);
+    }, 2500);
   }
 }

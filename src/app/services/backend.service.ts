@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { environment } from '../../environments/environment';
 import { Subject, BehaviorSubject, Observable, Observer } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
@@ -7,10 +6,10 @@ import { HttpClient } from '@angular/common/http';
 export class BackendService {
 
   //URL fuer Server (um App per PHP aktivieren zu koennen)
-  serverUrl = environment.serverUrl;
+  serverUrl: string;
 
   //URL fuer WebSocketServer
-  wssUrl = environment.wssUrl;
+  wssUrl: string;
 
   //WebSocket
   socket: Subject<any>;
@@ -44,6 +43,11 @@ export class BackendService {
 
   //Services injekten
   constructor(private _http: HttpClient) {
+
+    //IP-Adresse des Servers ermittln und daraus Links zu WSS und PHP-Skript erstellen
+    const host = window.location.hostname;
+    this.serverUrl = 'http://' + host + '/php';
+    this.wssUrl = 'ws://' + host + ':9090';
 
     //WebSocket erstellen
     this.createWebsocket();

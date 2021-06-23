@@ -35,6 +35,9 @@ export class BackendService {
   //aktueller Pause-Zustand
   paused$: Subject<boolean> = new Subject<boolean>();
 
+  //Usermode (um HTML-Seitentitel aendern zu koennen)
+  userMode$: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+
   //wurde Server heruntergefahren?
   shutdown$: BehaviorSubject<boolean> = new BehaviorSubject<boolean>(false);
 
@@ -134,6 +137,10 @@ export class BackendService {
           this.paused$.next(value);
           break;
 
+        case "userMode":
+          this.userMode$.next(value);
+          break;
+
         case "shutdown":
           this.shutdown$.next(true);
           break;
@@ -173,6 +180,10 @@ export class BackendService {
 
   getPaused() {
     return this.paused$;
+  }
+
+  getUserMode() {
+    return this.userMode$;
   }
 
   getShutdown() {

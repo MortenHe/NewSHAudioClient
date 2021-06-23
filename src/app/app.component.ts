@@ -19,9 +19,14 @@ export class AppComponent {
   //beim Init
   ngOnInit() {
 
-    //HTML-Page-Title setzen
-    //TODO ueber server.js setzen
-    this.titleService.setTitle("SH Audio");
+    //HTML-Page-Title setzen, kurze Namen Caps-Locked (mh -> MH), lange Titel nur 1. Buchstabe gross (luis -> Luis)
+    this.bs.getUserMode().subscribe((userMode: string) => {
+      console.log(userMode)
+      if (userMode) {
+        const title = userMode.length > 2 ? userMode[0].toUpperCase() + userMode.substring(1) : userMode.toUpperCase();
+        this.titleService.setTitle(title);
+      }
+    });
 
     //shutdown Zustand abbonieren
     this.bs.getShutdown().subscribe(shutdown => {

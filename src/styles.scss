@@ -114,8 +114,11 @@ button {
     cursor: pointer;
 }
 
-button:focus {
-    outline: none;
+button,
+input:focus,
+select:focus {
+    outline: none !important;
+    box-shadow: none !important;
 }
 
 .ripple {

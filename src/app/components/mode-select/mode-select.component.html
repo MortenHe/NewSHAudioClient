@@ -1,6 +1,6 @@
 <!-- Mode-Select (sh, mh, kids) -->
 <select [formControl]="audioModeSelect"
-        class="form-control w-auto">
+        class="form-select w-auto">
     <ng-container *ngFor="let audioMode of audioModes">
         <option *ngIf="audioMode.active"
                 [ngValue]="audioMode">

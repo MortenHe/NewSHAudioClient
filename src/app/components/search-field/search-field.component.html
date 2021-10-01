@@ -5,12 +5,12 @@
 
     <!-- Such-Symbol -->
     <fa-icon icon="search"
-             class="ml-2 opacity-70"></fa-icon>
+             class="ms-2 opacity-70"></fa-icon>
 
     <!-- Suchefeld -->
     <input placeholder="Lied suchen"
            [formControl]="titleSearch"
-           class="col ml-2"
+           class="col ms-2"
            type="search">
 </label>
 
@@ -33,7 +33,7 @@
             </button>
 
             <!-- Suchbegriff wird optisch hinterlegt, bei Click Song abspielen -->
-            <div class="ml-2 cursor-pointer flex-grow-1"
+            <div class="ms-2 cursor-pointer flex-grow-1"
                  (mouseenter)="setHoverTitle(file.index)"
                  (mouseleave)="resetHoverTitle()"
                  (click)="enqueueSongFromSearch(file.index)"

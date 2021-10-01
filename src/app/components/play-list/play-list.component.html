@@ -4,7 +4,7 @@
      (cdkDropListDropped)="drop($event)">
 
     <!-- 1. Titel (nicht sortierbar) -->
-    <div class="h5 mx-3 mb-3 pb-3 border-bottom d-flex no-gutters align-items-center">
+    <div class="h5 mx-3 mb-3 pb-3 border-bottom d-flex g-0 align-items-center">
 
         <!-- Song abspielen Button -->
         <button class="mb-0 px-1"
@@ -15,7 +15,7 @@
         </button>
 
         <!-- Titelinfo fett -->
-        <div class="ms-2 font-weight-bold">
+        <div class="ms-2 fw-bold">
             <span>{{files[0] | fileName}}</span>
         </div>
     </div>
@@ -40,7 +40,7 @@
         </div>
 
         <!-- sortierbarer Songtitel -->
-        <div class="ms-3 me-3 d-flex no-gutters align-items-center"
+        <div class="ms-3 me-3 d-flex g-0 align-items-center"
              cdkDrag>
 
             <!-- Song abspielen Button, aber nicht wenn Titel gearde geladen wird -->
